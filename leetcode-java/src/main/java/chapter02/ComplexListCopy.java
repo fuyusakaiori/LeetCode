@@ -10,12 +10,7 @@ import java.util.Map;
 /**
  * <h2>复制带随机指针的链表</h2>
  */
-public class ComplexListCopy
-{
-    public static void main(String[] args)
-    {
-
-    }
+public class ComplexListCopy {
 
     /**
      * <h3>思路: 哈希表实现</h3>

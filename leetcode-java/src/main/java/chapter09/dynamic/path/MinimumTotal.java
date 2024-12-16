@@ -1,7 +1,5 @@
 package chapter09.dynamic.path;
 
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
-
 import java.util.List;
 
 /**

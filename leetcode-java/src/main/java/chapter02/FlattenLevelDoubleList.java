@@ -5,12 +5,7 @@ import utils.ListNode;
 /**
  * <h2>扁平化多级双向链表</h2>
  */
-public class FlattenLevelDoubleList
-{
-    public static void main(String[] args)
-    {
-
-    }
+public class FlattenLevelDoubleList {
 
     /**
      * <h3>注意事项: </h3>

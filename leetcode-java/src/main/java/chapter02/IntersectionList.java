@@ -9,28 +9,23 @@ import java.util.*;
  * <h3>1. 相交链表: 链表中没有环, 判断是否相交</h3>
  * <h3>2. 相交链表 II: 链表存在环, 判断是否相交</h3>
  */
-public class IntersectionList
-{
-    public static void main(String[] args) {
-
-    }
+public class IntersectionList {
 
 
     /**
      * <h3>思路: 哈希表</h3>
      */
-    private static ListNode getIntersectionNodeHash(ListNode l1, ListNode l2){
+    private static ListNode getIntersectionNodeHash(ListNode first, ListNode second){
         Set<ListNode> set = new HashSet<>();
-        // 将第一个链表的结点全部存放在哈希表中
-        while(l1 != null){
-            set.add(l1);
-            l1 = l1.next;
+        while (first != null) {
+            set.add(first);
+            first = first.next;
         }
-        // 开始检验是否有重复的结点
-        while(l2 != null){
-            if(set.contains(l2))
-                return l2;
-            l2 = l2.next;
+        while (second != null) {
+            if (set.contains(second)) {
+                return second;
+            }
+            second = second.next;
         }
         return null;
     }
@@ -38,22 +33,25 @@ public class IntersectionList
     /**
      * <h3>思路: 先计算两个链表的长度, 然后让长的链表先走差值, 最后一起开始移动</h3>
      */
-    private static ListNode getIntersectionNode(ListNode l1, ListNode l2){
-        int firstLength = getLength(l1);
-        int secondLength = getLength(l2);
-        ListNode longer = firstLength < secondLength ? l2: l1;
-        ListNode shorter = firstLength < secondLength ? l1: l2;
-        int distance = Math.abs(firstLength - secondLength);
-        while (distance-- > 0){
-            longer = longer.next;
+    private static ListNode getIntersectionNode(ListNode first, ListNode second){
+        int firstLength = getLength(first);
+        int secondLength = getLength(second);
+        int diffLength = Math.abs(firstLength - secondLength);
+        for (int index = 0; index < diffLength; index++) {
+            if (firstLength < secondLength) {
+                second = second.next;
+            } else {
+                first = first.next;
+            }
         }
-        while (longer != null && shorter != null){
-            if (longer == shorter)
-                return longer;
-            longer = longer.next;
-            shorter = shorter.next;
+        while (first != second) {
+            if (first == null || second == null) {
+                return null;
+            }
+            first = first.next;
+            second = second.next;
         }
-        return null;
+        return first;
     }
 
     private static int getLength(ListNode list){

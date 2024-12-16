@@ -10,12 +10,7 @@ import java.util.LinkedList;
  * <h3>1. 两数相加: 链表采用逆序的方式存储数字</h3>
  * <h3>2. 两数相加 II: 链表采用顺序的方式存储数字</h3>
  */
-public class CalculateTwoNumbers
-{
-    public static void main(String[] args)
-    {
-
-    }
+public class CalculateTwoNumbers {
 
     /**
      * <h3>思路: 模拟</h3>

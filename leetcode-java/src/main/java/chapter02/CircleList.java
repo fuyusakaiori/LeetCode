@@ -16,11 +16,12 @@ public class CircleList {
      * <h3>思路: 环形链表 II</h3>
      */
     private static ListNode detectCycleHashSet(ListNode head){
-        Set<ListNode> set = new HashSet<>();
         ListNode current = head;
-        while (current != null){
-            if (!set.add(current))
+        Set<ListNode> set = new HashSet<>();
+        while (current != null) {
+            if (!set.add(current)) {
                 return current;
+            }
             current = current.next;
         }
         return null;
@@ -30,17 +31,20 @@ public class CircleList {
      * <h3>思路: 环形链表 II</h3>
      */
     public static ListNode detectCycle(ListNode head){
-        ListNode slow = head, fast = head;
+        ListNode slow = head;
+        ListNode fast = head;
         do {
-           if (fast == null || fast.next == null) return null;
-           fast = fast.next.next;
-           slow = slow.next;
-        }while (slow != fast);
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        } while (slow != fast);
         fast = head;
-        while (fast != slow){
+        while (slow != fast) {
             slow = slow.next;
             fast = fast.next;
         }
-        return fast;
+        return slow;
     }
 }

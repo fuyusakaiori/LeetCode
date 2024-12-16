@@ -1,6 +1,5 @@
 package chapter02;
 
-import utils.Important;
 import utils.ListNode;
 
 import java.util.LinkedList;
@@ -35,7 +34,7 @@ public class DeleteListElement {
 
     private static ListNode deleteDuplicates2(ListNode head){
         ListNode current = head;
-        while (current.next != null){
+        while (current != null && current.next != null){
             if (current.value == current.next.value){
                 current.next = current.next.next;
             }else{
@@ -47,8 +46,6 @@ public class DeleteListElement {
 
     /**
      * <h3>思路: 删除链表中的重复元素 II</h3>
-     * <h3>注: 直接转换成第一题就可以</h3>
-     * <h3>注: 官方题解的那种写法很容易出空指针异常, 也不好理解, 移除了</h3>
      */
     private static ListNode deleteDuplicates3(ListNode head){
         // 注: 防止要删除的结点就是头结点
@@ -92,29 +89,9 @@ public class DeleteListElement {
     }
 
     /**
-     * <h3>思路: 删除倒数第 N 个元素</h3>
+     * 思路: 删除链表倒数第 N 个结点, 栈
      */
-    private static ListNode removeNthFromEnd1(ListNode head, int nth){
-        int length = getLength(head);
-        int distance = length - nth;
-        ListNode dummy = new ListNode(0, head);
-        ListNode current = dummy;
-        while (distance-- > 0){
-            current = current.next;
-        }
-        current.next = current.next.next;
-        return dummy.next;
-    }
-
-    private static int getLength(ListNode list) {
-        int length = 0;
-        while(list != null && ++length > 0){
-            list = list.next;
-        }
-        return length;
-    }
-
-    private static ListNode removeNthFromEnd2(ListNode head, int nth){
+    private static ListNode removeNthFromEndStack(ListNode head, int nth){
         LinkedList<ListNode> stack = new LinkedList<>();
         ListNode dummy = new ListNode(0, head);
         ListNode current = dummy;
@@ -130,18 +107,42 @@ public class DeleteListElement {
         return dummy.next;
     }
 
-    @Important
+    /**
+     * <h3>思路: 计算链表长度</h3>
+     */
+    private static ListNode removeNthFromEnd1(ListNode head, int nth){
+        int length = getLength(head);
+        ListNode dummy = new ListNode(0, head);
+        ListNode current = dummy;
+        for (int index = 0; index < length - nth; index++) {
+            current = current.next;
+        }
+        current.next = current.next.next;
+        return dummy.next;
+    }
+
+    private static int getLength(ListNode list) {
+        int length = 0;
+        while(list != null && ++length > 0){
+            list = list.next;
+        }
+        return length;
+    }
+
+    /**
+     * <h3>思路: 双指针</h3>
+     */
     private static ListNode removeNthFromEnd3(ListNode head, int nth){
         ListNode dummy = new ListNode(0, head);
-        ListNode fast = head, slow = dummy;
-        while (nth-- > 0){
-            fast = fast.next;
+        ListNode first = dummy, second = head;
+        while (nth-- > 0) {
+            second = second.next;
         }
-        while (fast != null){
-            fast = fast.next;
-            slow = slow.next;
+        while (second != null) {
+            first = first.next;
+            second = second.next;
         }
-        slow.next = slow.next.next;
+        first.next = first.next.next;
         return dummy.next;
     }
 }

@@ -7,27 +7,52 @@ import java.util.LinkedList;
 /**
  * <h2>回文链表</h2>
  */
-public class PalindromeList
-{
-    public static void main(String[] args)
-    {
-
-    }
+public class PalindromeList {
 
     /**
      * <h3>思路: 栈实现</h3>
      */
     public static boolean isPalindromeStack(ListNode head) {
-        LinkedList<ListNode> stack = new LinkedList<>();
         ListNode current = head;
-        while (current != null){
-            stack.push(current);
+        LinkedList<Integer> stack = new LinkedList<>();
+        while (current != null) {
+            stack.push(current.value);
             current = current.next;
         }
-        while(!stack.isEmpty()){
-            if (stack.pop().value != head.value)
+        current = head;
+        while (current != null) {
+            if (current.value != stack.pop()) {
                 return false;
-            head = head.next;
+            }
+            current = current.next;
+        }
+        return true;
+    }
+
+    /**
+     * <h3>思路: 栈实现, 优化</h3>
+     */
+    public static boolean isPalindromeStackOptimize(ListNode head) {
+        boolean flag = false;
+        ListNode current = head;
+        ListNode slow = head, fast = head;
+        LinkedList<Integer> stack = new LinkedList<>();
+        while (fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        while (current != slow) {
+            stack.push(current.value);
+            current = current.next;
+        }
+        if (flag) {
+            stack.push(current.value);
+        }
+        while (current != null) {
+            if (!stack.isEmpty() && current.value != stack.pop()) {
+                return false;
+            }
+            current = current.next;
         }
         return true;
     }
@@ -45,24 +70,14 @@ public class PalindromeList
             slow = slow.next;
             fast = fast.next.next;
         }
-        // 开始逆序
-        ListNode current = slow;
-        ListNode previous = null;
-        ListNode next = null;
-        while (current != null){
-            next = current.next;
-            current.next = previous;
-            previous = current;
-            current = next;
-        }
-        // 开始对比
-        slow = previous;
-        fast = head;
-        while(slow != null){
-            if (slow.value != fast.value)
+        ListNode first = head;
+        ListNode second = ReverseList.reverseListLoop(slow);
+        while (second != null) {
+            if (first.value != second.value) {
                 return false;
-            slow = slow.next;
-            fast = fast.next;
+            }
+            first = first.next;
+            second = second.next;
         }
         return true;
     }
