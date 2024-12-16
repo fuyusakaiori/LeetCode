@@ -6,159 +6,128 @@ import (
 	"time"
 )
 
-const (
-	NumsLength = 20
-	RandLimit  = 100
-)
+type SortAlgorithm interface {
+	Sort(nums []int)
+}
 
-// 冒泡排序
-func bubbleSort(nums []int) {
+type BubbleSort struct{}
+
+type InsertSort struct{}
+
+type SelectSort struct{}
+
+type MergeSort struct{}
+
+type QuickSort struct{}
+
+type HeapSort struct{}
+
+func (sort *BubbleSort) Sort(nums []int) {
+	fmt.Printf("bubble sort: before sort %v\n", nums)
 	for first := 0; first < len(nums); first++ {
-		for second := first + 1; second < len(nums); second++ {
-			if nums[first] > nums[second] {
-				swap(nums, first, second)
+		for second := 0; second < len(nums)-1-first; second++ {
+			if nums[second] > nums[second+1] {
+				swap(nums, second, second+1)
 			}
 		}
 	}
+	fmt.Printf("bubble sort: after sort %v\n", nums)
 }
 
-// 选择排序
-func selectSort(nums []int) {
+func (sort *InsertSort) Sort(nums []int) {
+	fmt.Printf("insert sort: before sort %v\n", nums)
 	for first := 0; first < len(nums); first++ {
-		minIndex := first
-		// 向后遍历找到最小的元素
-		for second := first + 1; second < len(nums); second++ {
-			if nums[minIndex] > nums[second] {
-				minIndex = second
-			}
-		}
-		swap(nums, minIndex, first)
-	}
-}
-
-// 插入排序
-func insertSort(nums []int) {
-	for first := 0; first < len(nums); first++ {
-		// 向前遍历不断交换元素
 		for second := first; second > 0; second-- {
-			if nums[second] < nums[second-1] {
+			if nums[second-1] > nums[second] {
 				swap(nums, second-1, second)
 			}
 		}
 	}
+	fmt.Printf("insert Sort: after sort %v\n", nums)
 }
 
-// 堆排序
-func heapSort(nums []int)  {
-	// 构建大顶堆
-	index := 0;
-	for index < len(nums) {
-		heapInsert(nums, index)
-		index++
-	}
-	// 根节点换到最后
-	for index > 0 {
-		index--
-		swap(nums, 0, index)
-		heapify(nums, index)
-	}
-}
-
-// 注: 大顶堆
-func heapInsert(nums []int, index int)  {
-	parent := (index - 1) / 2
-	for nums[index] > nums[parent] {
-		swap(nums, index, parent)
-		index = parent
-		parent = (index - 1) / 2
-	}
-}
-
-func heapify(nums []int, limit int)  {
-	parentIndex, leftIndex := 0, 1
-	for leftIndex < limit {
-		largest := leftIndex
-		if leftIndex + 1 < limit && nums[leftIndex] < nums[leftIndex + 1] {
-			largest = leftIndex + 1
+func (sort *SelectSort) Sort(nums []int) {
+	fmt.Printf("select sort: before sort %v\n", nums)
+	for first := 0; first < len(nums); first++ {
+		minIndex := first
+		for second := first; second < len(nums); second++ {
+			if nums[minIndex] > nums[second] {
+				minIndex = second
+			}
 		}
-		// 大顶堆父节点一定大于子节点: 如果相等, 那么就没有必要再调整了
-		if nums[largest] <= nums[parentIndex] {
-			break
-		}
-		swap(nums, parentIndex, largest)
-		parentIndex = largest
-		leftIndex = (parentIndex << 1) + 1
+		swap(nums, first, minIndex)
 	}
+	fmt.Printf("select sort: after sort %v\n", nums)
 }
 
-// 归并排序
-func mergeSort(nums []int) {
-	fork(nums, 0, len(nums) - 1)
+func (sort *MergeSort) Sort(nums []int) {
+	fmt.Printf("merge sort: before sort %v\n", nums)
+	sort.fork(nums, 0, len(nums) - 1)
+	fmt.Printf("merge sort: after sort %v\n", nums)
 }
 
-func fork(nums []int, left int, right int) {
+func (sort *MergeSort) fork(nums []int, left, right int) {
 	if left >= right {
 		return
 	}
 	mid := left + ((right - left) >> 1)
-	fork(nums, left, mid)
-	fork(nums, mid + 1, right)
-	merge(nums, left, mid, right)
+	sort.fork(nums, left, mid)
+	sort.fork(nums, mid + 1, right)
+	sort.merge(nums, left, mid, right)
 }
 
-func merge(nums []int, left int, mid int, right int) {
-	index := 0
-	leftIndex, rightIndex := left, mid + 1
+func (sort *MergeSort) merge(nums []int, left, mid, right int) {
+	index, leftIndex, rightIndex := 0, left, mid + 1
 	helper := make([]int, right - left + 1)
 	for leftIndex <= mid && rightIndex <= right {
-		if nums[leftIndex] <= nums[rightIndex] {
+		if nums[leftIndex] < nums[rightIndex] {
 			helper[index] = nums[leftIndex]
-			index++
 			leftIndex++
-		}
-		if nums[leftIndex] > nums[rightIndex] {
+		} else {
 			helper[index] = nums[rightIndex]
-			index++
 			rightIndex++
 		}
+		index++
 	}
-	if leftIndex <= mid {
-		copy(helper[index:], nums[leftIndex : mid + 1])
+	for leftIndex <= mid {
+		helper[index] = nums[leftIndex]
+		index++
+		leftIndex++
 	}
-	if rightIndex <= right {
-		copy(helper[index:], nums[rightIndex : right + 1])
+	for rightIndex <= right {
+		helper[index] = nums[rightIndex]
+		index++
+		rightIndex++
 	}
-	copy(nums[left : right + 1], helper)
+	for location := 0; location < len(helper); location++ {
+		nums[left] = helper[location]
+		left++
+	}
 }
 
-// 快速排序
-func quickSort(nums []int)  {
-	divide(nums, 0, len(nums) - 1)
+func (sort *QuickSort) Sort(nums []int) {
+	fmt.Printf("quick sort: before sort %v\n", nums)
+	sort.fork(nums, 0, len(nums) - 1)
+	fmt.Printf("quick sort: after sort %v\n", nums)
 }
 
-func divide(nums []int, left int, right int)  {
+func (sort *QuickSort) fork(nums []int, left, right int)  {
 	if left >= right {
 		return
 	}
-	// 随机选择元素作为目标元素
-	target := left + rand.Intn(right - left + 1)
-	// 交换目标元素到末尾
-	swap(nums, target, right)
-	// 分区
-	leftBound, rightBound := partition(nums, left, right)
-	// 继续
-	divide(nums, left, leftBound)
-	divide(nums, rightBound, right)
+	swap(nums, left + rand.Intn(right - left), right)
+	leftBound, rightBound := sort.partition(nums, left, right, nums[right])
+	sort.fork(nums, left, leftBound)
+	sort.fork(nums, rightBound, right)
 }
 
-func partition(nums []int, left int, right int) (int, int) {
-	target := nums[right]
+func (sort *QuickSort) partition(nums []int, left, right, target int) (int, int) {
 	index, leftIndex, rightIndex := left, left, right
-	for index <= rightIndex {
+	for index < rightIndex + 1 {
 		if nums[index] < target {
 			swap(nums, index, leftIndex)
-			leftIndex++
 			index++
+			leftIndex++
 		} else if nums[index] > target {
 			swap(nums, index, rightIndex)
 			rightIndex--
@@ -169,48 +138,75 @@ func partition(nums []int, left int, right int) (int, int) {
 	return leftIndex - 1, rightIndex + 1
 }
 
-// 交换数组元素
+func (sort *HeapSort) Sort(nums []int)  {
+	fmt.Printf("heap sort: before sort %v\n", nums)
+	heapSize := 0
+	for heapSize < len(nums) {
+		sort.heapInsert(nums, heapSize)
+		heapSize++
+	}
+	heapSize--
+	swap(nums, 0, heapSize)
+	for heapSize > 0 {
+		sort.heapify(nums, 0, heapSize)
+		heapSize--
+		swap(nums, 0, heapSize)
+	}
+	fmt.Printf("heap sort: after sort %v\n", nums)
+}
+
+func (sort *HeapSort) heapInsert(nums []int, index int)  {
+	parentIndex := (index - 1) / 2
+	for nums[index] > nums[parentIndex] {
+		swap(nums, index, parentIndex)
+		index = parentIndex
+		parentIndex = (index - 1) / 2
+	}
+}
+
+func (sort *HeapSort) heapify(nums []int, parentIndex, heapSize int)  {
+	leftIndex := (parentIndex << 1) + 1
+	for leftIndex < heapSize {
+		largestIndex := leftIndex
+		if leftIndex + 1 < heapSize && nums[leftIndex] < nums[leftIndex + 1] {
+			largestIndex = leftIndex + 1
+		}
+		if largestIndex == parentIndex {
+			break
+		}
+		swap(nums, parentIndex, largestIndex)
+		parentIndex = largestIndex
+		leftIndex = (parentIndex << 1) + 1
+	}
+}
+
 func swap(nums []int, first int, second int) {
 	temp := nums[first]
 	nums[first] = nums[second]
 	nums[second] = temp
 }
 
-// 生成随机元素数组
-func generateRandNums() []int {
-	nums := make([]int, NumsLength)
+func generate() []int {
+	nums := make([]int, 10)
 	generator := rand.New(rand.NewSource(time.Now().UnixNano()))
 	// 0. 随机生成数组
 	for index := 0; index < len(nums); index++ {
-		nums[index] = generator.Intn(RandLimit)
+		nums[index] = generator.Intn(10)
 	}
 	return nums
 }
 
 func main() {
-	// 1. 冒泡排序
-	bubbleSortNums := generateRandNums()
-	bubbleSort(bubbleSortNums)
-	fmt.Printf("bubble sort nums = %v\n", bubbleSortNums)
-	// 2. 选择排序: 向后看
-	selectSortNums := generateRandNums()
-	selectSort(selectSortNums)
-	fmt.Printf("select sort nums = %v\n", selectSortNums)
-	// 3. 插入排序: 向前看
-	insertSortNums := generateRandNums()
-	insertSort(insertSortNums)
-	fmt.Printf("insert sort nums = %v\n", insertSortNums)
-	// 4. 堆排序
-	heapSortNums := generateRandNums()
-	heapSort(heapSortNums)
-	fmt.Printf("heap sort nums = %v\n", heapSortNums)
-	// 5. 归并排序
-	mergeSortNums := generateRandNums()
-	mergeSort(mergeSortNums)
-	fmt.Printf("merge sort nums = %v\n", mergeSortNums)
-	// 6. 快速排序
-	quickSortNums := generateRandNums()
-	quickSort(quickSortNums)
-	fmt.Printf("quick sort nums = %v\n", quickSortNums)
-	// 7. 桶排序
+	bubbleSort := &BubbleSort{}
+	bubbleSort.Sort(generate())
+	insertSort := &InsertSort{}
+	insertSort.Sort(generate())
+	selectSort := &SelectSort{}
+	selectSort.Sort(generate())
+	mergeSort := &MergeSort{}
+	mergeSort.Sort(generate())
+	quickSort := &QuickSort{}
+	quickSort.Sort(generate())
+	heapSort := &HeapSort{}
+	heapSort.Sort(generate())
 }
