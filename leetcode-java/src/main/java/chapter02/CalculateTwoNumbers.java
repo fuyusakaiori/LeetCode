@@ -2,7 +2,6 @@ package chapter02;
 
 import utils.ListNode;
 
-import java.io.File;
 import java.util.LinkedList;
 
 /**
@@ -43,9 +42,6 @@ public class CalculateTwoNumbers {
      * 两数之和 II: 模拟
      */
     public static ListNode addTwoNumbersReverse(ListNode first, ListNode second) {
-        int sum = 0, carry = 0;
-        ListNode dummy = new ListNode(0);
-        ListNode current = dummy;
         first = ReverseList.reverseListLoop(first);
         second = ReverseList.reverseListLoop(second);
         return ReverseList.reverseListLoop(addTwoNumbers(first, second));
