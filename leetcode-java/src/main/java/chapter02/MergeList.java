@@ -2,20 +2,18 @@ package chapter02;
 
 import utils.ListNode;
 
-import java.util.PriorityQueue;
-
 /**
  * <h2>合并链表</h2>
  * <p>1. 合并两个有序链表</p>
  * <p>2. 合并两个普通的链表</p>
  * <p>3. 合并 K 个升序链表</p>
  */
-public class MergeLists {
+public class MergeList {
 
     /**
      * <h3>思路: 哑元 + 比大小</h3>
      */
-    private static ListNode mergeTwoSortedLists(ListNode list1, ListNode list2){
+    public static ListNode mergeTwoSortedLists(ListNode list1, ListNode list2){
         ListNode dummy = new ListNode(0);
         ListNode current = dummy;
         while (list1 != null && list2 != null) {
@@ -40,7 +38,7 @@ public class MergeLists {
     /**
      * <h3>思路: 找到合并链表的起始位置和终止位置就行</h3>
      */
-    private static ListNode mergeBetweenLists(ListNode list1, ListNode list2, int left, int right){
+    public static ListNode mergeBetweenLists(ListNode list1, ListNode list2, int left, int right){
         ListNode dummy = new ListNode(0, list1);
         ListNode current = dummy, tail = list2;
         ListNode leftNode = null, rightNode = null;
@@ -64,7 +62,7 @@ public class MergeLists {
     /**
      * <h3> 思路: 合并 K 个有序链表</h3>
      */
-    private static ListNode mergeKLists(ListNode[] lists){
+    public static ListNode mergeKLists(ListNode[] lists){
         if (lists.length == 0) {
             return null;
         }

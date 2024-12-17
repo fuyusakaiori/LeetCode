@@ -13,118 +13,58 @@ import java.util.LinkedList;
 public class CalculateTwoNumbers {
 
     /**
-     * <h3>思路: 模拟</h3>
+     * <h3>两数之和: 模拟</h3>
      */
-    private static ListNode addTwoNumbers(ListNode list1, ListNode list2){
+    public static ListNode addTwoNumbers(ListNode first, ListNode second) {
+        int sum = 0, carry = 0;
         ListNode dummy = new ListNode(0);
         ListNode current = dummy;
-        ListNode node;
-        int result = 0;
-        int carry = 0;
-        while (list1 != null && list2 != null){
-            result = list1.value + list2.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            current.next = node;
+        while (first != null || second != null) {
+            int firstValue = first != null ? first.value: 0;
+            int secondValue = second != null ? second.value: 0;
+            sum = (firstValue + secondValue + carry) % 10;
+            carry = (firstValue + secondValue + carry) / 10;
+            current.next = new ListNode(sum);
             current = current.next;
-            list1 = list1.next;
-            list2 = list2.next;
+            if (first != null) {
+                first = first.next;
+            }
+            if (second != null) {
+                second = second.next;
+            }
         }
-        while (list1 != null){
-            result = list1.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            current.next = node;
-            current = current.next;
-            list1 = list1.next;
+        if (carry != 0) {
+            current.next = new ListNode(carry);
         }
-
-        while (list2 != null){
-            result = list2.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            current.next = node;
-            current = current.next;
-            list2 = list2.next;
-        }
-
-        current.next = carry != 0 ? new ListNode(carry) : null;
-
         return dummy.next;
     }
 
     /**
-     * <h3>1. 思路: 反转链表 + 模拟</h3>
-     * <h3>2. 思路: 栈 + 模拟</h3>
+     * 两数之和 II: 模拟
      */
-    private static ListNode addTwoNumbersByReverse(ListNode list1, ListNode list2){
-        ListNode first = reverse(list1);
-        ListNode second = reverse(list2);
-        ListNode dummy = null;
-        ListNode node = null;
-        int result = 0;
-        int carry = 0;
-        while (first != null && second != null){
-            result = first.value + second.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            node.next = dummy;
-            dummy = node;
-            first = first.next;
-            second = second.next;
-        }
-        while (first != null){
-            result = first.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            node.next = dummy;
-            dummy = node;
-            first = first.next;
-        }
-        while (second != null){
-            result = second.value + carry;
-            carry = result / 10;
-            node = new ListNode(result % 10);
-            node.next = dummy;
-            dummy = node;
-            second = second.next;
-        }
-        if (carry != 0){
-            node = new ListNode(1);
-            node.next = dummy;
-            dummy = node;
-        }
-        return dummy;
+    public static ListNode addTwoNumbersReverse(ListNode first, ListNode second) {
+        int sum = 0, carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        first = ReverseList.reverseListLoop(first);
+        second = ReverseList.reverseListLoop(second);
+        return ReverseList.reverseListLoop(addTwoNumbers(first, second));
     }
 
     /**
-     * <h3>反转链表</h3>
+     * 两数之和 II: 栈
      */
-    private static ListNode reverse(ListNode head){
-        ListNode previous = null;
-        ListNode current = head;
-        ListNode next = head.next;
-        while (current != null){
-            current.next = previous;
-            previous = current;
-            current = next;
-            next = next != null ? next.next: null;
-        }
-
-        return previous;
-    }
-
-    private static ListNode addTwoNumbersByStack(ListNode list1, ListNode list2){
+    private static ListNode addTwoNumbersByStack(ListNode first, ListNode second){
         LinkedList<Integer> firstStack = new LinkedList<>();
         LinkedList<Integer> secondStack = new LinkedList<>();
         // 压栈
-        while (list1 != null){
-            firstStack.push(list1.value);
-            list1 = list1.next;
+        while (first != null){
+            firstStack.push(first.value);
+            first = first.next;
         }
-        while (list2 != null){
-            secondStack.push(list2.value);
-            list2 = list2.next;
+        while (second != null){
+            secondStack.push(second.value);
+            second = second.next;
         }
         // 模拟计算
         int carry = 0;
@@ -132,9 +72,9 @@ public class CalculateTwoNumbers {
         ListNode node = null;
         ListNode dummy = null;
         while (!firstStack.isEmpty() || !secondStack.isEmpty() || carry != 0){
-            int first = firstStack.isEmpty() ? 0: firstStack.pop();
-            int second = secondStack.isEmpty() ? 0: secondStack.pop();
-            result = first + second + carry;
+            int firstValue = firstStack.isEmpty() ? 0: firstStack.pop();
+            int secondValue = secondStack.isEmpty() ? 0: secondStack.pop();
+            result = firstValue + secondValue + carry;
             carry = result / 10;
             node = new ListNode(result % 10);
             // 头插法

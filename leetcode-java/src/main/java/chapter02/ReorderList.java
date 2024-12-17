@@ -5,7 +5,7 @@ import utils.ListNode;
 /**
  * <h2>重排链表</h2>
  */
-public class ReOrderList {
+public class ReorderList {
 
 
     /**
