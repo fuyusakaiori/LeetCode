@@ -1,5 +1,61 @@
 package main
 
+type ListRotator struct {}
+
+// 旋转链表
+func (rotator *ListRotator) RotateRightLength(head *ListNode, k int) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	length := rotator.getLength(head)
+	offset := k % length
+	dummy := &ListNode{Val: 0}
+	current := head
+	for index := 0; index < length - offset - 1; index++ {
+		current = current.Next
+	}
+	start := current
+	for index := length - offset - 1; index < length - 1; index++ {
+		current = current.Next
+	}
+	end := current
+	// TODO: 必须先将最后的节点指向头结点, 否则无法兼容 k % length == 0 的情况
+	end.Next = head
+	dummy.Next = start.Next
+	start.Next = nil
+	return dummy.Next
+}
+
+// 旋转链表 => 删除倒数第 N 个节点
+func (rotator *ListRotator) RotateRight(head *ListNode, k int) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	first, second := head, head
+	offset := k % rotator.getLength(head)
+	for index := 0; index < offset; index++ {
+		first = first.Next
+	}
+	for first.Next != nil {
+		first = first.Next
+		second = second.Next
+	}
+	dummy := &ListNode{Val: 0}
+	first.Next = head
+	dummy.Next = second.Next
+	second.Next = nil
+	return dummy.Next
+}
+
+func (rotator *ListRotator) getLength(head *ListNode) int {
+	length := 0
+	for head != nil {
+		length++
+		head = head.Next
+	}
+	return length
+}
+
 // 旋转链表: 类似于删除倒数第 N 个节点
 func rotateRight(head *ListNode, k int) *ListNode {
 	if head == nil || head.Next == nil {

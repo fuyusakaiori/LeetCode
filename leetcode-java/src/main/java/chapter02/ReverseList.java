@@ -49,7 +49,7 @@ public class ReverseList {
         ListNode current = dummy, start = null, end = null;
         ListNode leftNode = null, rightNode = null;
         int index = 0;
-        for (index = 0; index < left; index++) {
+        for (index = 0; index < left - 1; index++) {
             current = current.next;
         }
         leftNode = current;

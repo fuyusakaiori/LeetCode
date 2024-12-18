@@ -1,27 +1,24 @@
 package main
 
+type ListReorder struct {}
+
 // 重排链表
-func reorderList(head *ListNode) {
-	// 1. 快慢指针找中点
+func (reorder *ListReorder) ReorderList(head *ListNode) *ListNode {
 	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
-		slow, fast = slow.Next, fast.Next.Next
+		slow = slow.Next
+		fast = fast.Next.Next
 	}
-	// 2. 反转链表
-	var previous *ListNode
-	for slow != nil {
-		next := slow.Next
-		slow.Next = previous
-		previous = slow
-		slow = next
+	fast = head
+	reverser := &ListReverser{}
+	slow = reverser.ReverseListLoop(slow)
+	for slow.Next != nil {
+		fastNext := fast.Next
+		slowNext := slow.Next
+		fast.Next = slow
+		slow.Next = fastNext
+		fast = fastNext
+		slow = slowNext
 	}
-	// 3. 重排链表
-	first, last := head, previous
-	for last.Next != nil {
-		fNext, lNext := first.Next, last.Next
-		first.Next = last
-		first = fNext
-		last.Next = first
-		last = lNext
-	}
+	return head
 }

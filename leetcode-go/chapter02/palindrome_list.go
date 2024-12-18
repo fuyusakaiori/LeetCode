@@ -1,5 +1,29 @@
 package main
 
+type ListPalindromer struct {
+
+}
+
+// 回文链表
+func (palindromer *ListPalindromer) isPalindrome(head *ListNode) bool {
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	fast = head
+	reverser := &ListReverser{}
+	slow = reverser.ReverseListLoop(slow)
+	for slow != nil {
+		if slow.Val != fast.Val {
+			return false
+		}
+		slow = slow.Next
+		fast = fast.Next
+	}
+	return true
+}
+
 // 回文链表: 数组 + 双指针
 func isPalindromeV1(head *ListNode) bool {
 	// 1. 遍历链表

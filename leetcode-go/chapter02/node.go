@@ -11,3 +11,9 @@ type Node struct {
 	Next  *Node
 	Child *Node
 }
+
+type RandomNode struct {
+	Val    int
+	Next   *RandomNode
+	Random *RandomNode
+}

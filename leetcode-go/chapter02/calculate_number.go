@@ -1,56 +1,39 @@
 package main
 
-// 两数相加
-func addTwoNumbers(first *ListNode, second *ListNode) *ListNode {
-	carry, dummy := 0, new(ListNode)
-	tail := dummy
+type TwoNumbersAdder struct {
+
+}
+
+// 两数之和
+func (adder *TwoNumbersAdder) AddTwoNumbers(first, second *ListNode) *ListNode {
+	sum, carry := 0, 0
+	dummy := &ListNode{Val: 0}
+	current := dummy
 	for first != nil || second != nil {
-		firstVal, secondVal := 0, 0
+		firstValue, secondValue := 0, 0
 		if first != nil {
-			firstVal = first.Val
+			firstValue = first.Val
 			first = first.Next
 		}
 		if second != nil {
-			secondVal = second.Val
+			secondValue = second.Val
 			second = second.Next
 		}
-		result := (firstVal + secondVal + carry) % 10
-		carry = (firstVal + secondVal + carry) / 10
-		node := &ListNode{Val: result}
-		tail.Next = node
-		tail = tail.Next
+		sum = (firstValue + secondValue + carry) % 10
+		carry = (firstValue + secondValue + carry) / 10
+		current.Next = &ListNode{Val: sum}
+		current = current.Next
 	}
 	if carry != 0 {
-		tail.Next = &ListNode{Val: carry}
+		current.Next = &ListNode{Val: carry}
 	}
 	return dummy.Next
 }
 
-// 两数相加 II
-func addTwoNumbersV2(first *ListNode, second *ListNode) *ListNode {
-	// 反转链表
-	first, second = reverseListV1(first), reverseListV1(second)
-	// 模拟计算
-	carry, dummy := 0, new(ListNode)
-	tail := dummy
-	for first != nil || second != nil {
-		firstVal, secondVal := 0, 0
-		if first != nil {
-			firstVal = first.Val
-			first = first.Next
-		}
-		if second != nil {
-			secondVal = second.Val
-			second = second.Next
-		}
-		result := (firstVal + secondVal + carry) % 10
-		carry = (firstVal + secondVal + carry) / 10
-		node := &ListNode{Val: result}
-		tail.Next = node
-		tail = tail.Next
-	}
-	if carry != 0 {
-		tail.Next = &ListNode{Val: carry}
-	}
-	return reverseListV1(dummy.Next)
+// 两数之和 II
+func (adder *TwoNumbersAdder) AddTwoNumbersII(first, second *ListNode) *ListNode {
+	reverse := &ListReverser{}
+	first = reverse.ReverseListLoop(first)
+	second = reverse.ReverseListLoop(second)
+	return reverse.ReverseListLoop(adder.AddTwoNumbers(first, second))
 }

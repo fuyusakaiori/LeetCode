@@ -1,14 +1,16 @@
 package main
 
-// 相交链表 (不带环): 哈希表
-func getIntersectionNodeV1(first *ListNode, second *ListNode) *ListNode {
-	// 1. 遍历链表
+import "math"
+
+type ListIntersecter struct {}
+
+// 相交链表: 哈希表
+func (intersection *ListIntersecter) GetIntersectionNodeHash(first, second *ListNode) *ListNode {
 	set := make(map[*ListNode]struct{})
 	for first != nil {
 		set[first] = struct{}{}
 		first = first.Next
 	}
-	// 2. 查询集合
 	for second != nil {
 		if _, ok := set[second]; ok {
 			return second
@@ -18,30 +20,29 @@ func getIntersectionNodeV1(first *ListNode, second *ListNode) *ListNode {
 	return nil
 }
 
-// 相交链表 (不带环): 长度之差
-func getIntersectionNodeV2(first *ListNode, second *ListNode) *ListNode {
-	// 1. 计算链表长度
-	firstLength := getLength(first)
-	secondLength := getLength(second)
-	// 2. 获取长度差
-	distance, largest, smallest := firstLength-secondLength, first, second
-	if firstLength < secondLength {
-		distance = secondLength - firstLength
-		smallest, largest = first, second
+// 相交链表: 计算长度
+func (intersection *ListIntersecter) GetIntersectionNode(first, second *ListNode) *ListNode {
+	firstLength := intersection.getLength(first)
+	secondLength := intersection.getLength(second)
+	diffLength := int(math.Abs(float64(firstLength) - float64(secondLength)))
+	for index := 0; index < diffLength; index++ {
+		if firstLength < secondLength {
+			second = second.Next
+		} else {
+			first = first.Next
+		}
 	}
-	// 3. 提前移动
-	for index := 0; index < distance; index++ {
-		largest = largest.Next
+	for first != second {
+		if first == nil || second.Next == nil {
+			return nil
+		}
+		first = first.Next
+		second = second.Next
 	}
-	// 4. 同时移动
-	for largest != smallest {
-		largest = largest.Next
-		smallest = smallest.Next
-	}
-	return smallest
+	return first
 }
 
-func getLength(list *ListNode) int {
+func (intersection *ListIntersecter) getLength(list *ListNode) int {
 	length := 0
 	for list != nil {
 		list = list.Next

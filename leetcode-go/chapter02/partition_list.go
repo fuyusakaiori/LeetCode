@@ -4,26 +4,30 @@ import (
 	"math"
 )
 
+type ListPartitioner struct {}
+
 // 分隔链表
-func partition(head *ListNode, target int) *ListNode {
-	// 1. 准备大小链表
-	sHead, bHead := new(ListNode), new(ListNode)
-	sTail, bTail := sHead, bHead
-	// 2. 遍历链表
+func (partitioner *ListPartitioner) Partition(head *ListNode, target int) *ListNode {
 	current := head
+	sDummy, bDummy := &ListNode{Val: 0}, &ListNode{Val: 0}
+	sCurrent, bCurrent := sDummy, bDummy
 	for current != nil {
 		if current.Val < target {
-			sTail.Next = current
-			sTail = sTail.Next
+			sCurrent.Next = current
+			sCurrent = sCurrent.Next
 		} else {
-			bTail.Next = current
-			bTail = bTail.Next
+			bCurrent.Next = current
+			bCurrent = bCurrent.Next
 		}
 		current = current.Next
 	}
-	// 3. 衔接链表
-	sTail.Next = bHead.Next
-	return sHead.Next
+	bCurrent.Next = nil
+	sCurrent.Next = bDummy.Next
+	return sDummy.Next
+}
+
+func (partitioner *ListPartitioner) SplitListToParts(head *ListNode, k int) []*ListNode  {
+
 }
 
 // 分隔链表

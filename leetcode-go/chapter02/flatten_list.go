@@ -1,30 +1,32 @@
 package main
 
+type ListFlattener struct {}
+
 // 扁平化多级双向链表
-func flatten(root *Node) *Node {
-	if root != nil {
-		dfs(root)
+func (flattener *ListFlattener) Flatten(root *Node) *Node {
+	if root == nil {
+		return nil
 	}
+	flattener.dfs(root)
 	return root
 }
 
-func dfs(head *Node) *Node {
-	current, tail := head, head
+func (flattener *ListFlattener) dfs(head *Node) *Node {
+	var current *Node = head
+	var tail *Node = nil
 	for current != nil {
-		if current.Child == nil {
+		if current.Child != nil {
+			tail = flattener.dfs(current.Child)
+			tail.Next = current.Next
+			if current.Next != nil {
+				current.Next.Prev = tail
+			}
+			current.Next = current.Child
+			current.Child.Prev = current
+			current.Child = nil
+		} else  {
 			tail = current
 			current = current.Next
-		} else {
-			next := current.Next
-			cHead := current.Child
-			cTail := dfs(cHead)
-			// 如果后继结点为空, 那么就不需要指向新增前驱结点
-			if next != nil {
-				next.Prev, cTail.Next = cTail, next
-			}
-			current.Next, cHead.Prev = cHead, current
-			current.Child = nil
-			current, tail = cTail, cTail
 		}
 	}
 	return tail
