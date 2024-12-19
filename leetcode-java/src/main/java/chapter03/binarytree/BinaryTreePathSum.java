@@ -11,33 +11,28 @@ import java.util.*;
  * <h3>3. 路径总和 III</h3>
  * <h3>4. 求根结点到叶子结点数字之和</h3>
  */
-public class BinaryTreePathSum
-{
+public class BinaryTreePathSum {
 
     /**
-     * <h3>思路: </h3>
-     * <h3>1. 深度遍历: 目标值不断减去结点值</h3>
-     * <h3>1.1: 如果在非叶子结点变为 0, 那么到达叶子结点就会为负数, 返回 false</h3>
-     * <h3>1.2: 如果到达叶子结点恰好为 0, 那么这条路径就是有效的</h3>
-     * <p>2. 宽度遍历: 借助两个队列完成</p>
-     * @param root 根结点
-     * @param target 目标值
-     * @return 是否存在相应的路径
+     * 路径总和: 递归实现, 深度搜索
+     * 1. 深度遍历: 目标值不断减去结点值
+     * 2. 如果在非叶子结点变为 0, 那么到达叶子结点就会为负数, 返回 false
+     * 3. 如果到达叶子结点恰好为 0, 那么这条路径就是有效的
      */
-    private static boolean hasPathSumDFS(TreeNode root, int target){
-        if (root == null) return false;
-        // 必须到达叶子结点才可以算作一条路径
-        if (root.left == null && root.right == null)
+    public static boolean hasPathSumDFS(TreeNode root, int target) {
+        // 注意: 这个判断其实是用来处理空值的
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
             return root.value == target;
-        // 只要左子树或者右子树中存在一条就可以
+        }
         return hasPathSumDFS(root.left, target - root.value) ||
-                       hasPathSumDFS(root.right, target - root.value);
+                hasPathSumDFS(root.right, target - root.value);
     }
 
     /**
-     * <h3>思路: 队列记录路径和</h3>
-     * @param root 根结点
-     * @return 是否存在相应的路径
+     * 路径总和: 迭代实现, 广度搜索
      */
     private static boolean hasPathSumBFS(TreeNode root, int targetSum){
         Queue<TreeNode> queue = new LinkedList<>();
@@ -67,43 +62,39 @@ public class BinaryTreePathSum
 
 
     /**
-     * <h3>思路: 深度遍历</h3>
-     * <h3>1. 深度遍历直到叶子结点, 每经过一个结点都将其添加到路径中</h3>
-     * <h3>2. 到达叶子结点之后, 就判断当前目标和是否等于结点的值, 如果相等就添加到集合中去</h3>
-     * @return 所有符合要求的路径
+     * 路径总和 II: 递归实现, 深度搜索
      */
-    private static List<List<Integer>> findPathSumFromRoot(TreeNode root, int target){
-        List<Integer> path = new LinkedList<>();
+    public static List<List<Integer>> pathSumDFS(TreeNode root, int target) {
+        Deque<Integer> path = new LinkedList<>();
         List<List<Integer>> paths = new LinkedList<>();
-        dfs(root, target, path, paths);
+        pathSumDFS(root, target, path, paths);
         return paths;
     }
 
-    private static void dfs(TreeNode root, int target, List<Integer> path, List<List<Integer>> paths){
-        // 防止其中一个孩子是空的
-        if (root == null) return;
-        path.add(root.value);
-        // 到达叶子结点后就开始判断, 路径是否符合要求
-        if (root.left == null && root.right == null && target == root.value){
-            // 防止分支污染
-            paths.add(new LinkedList<>(path));
+    public static void pathSumDFS(TreeNode root, int target, Deque<Integer> path, List<List<Integer>> paths) {
+        if (root == null) {
+            return;
         }
-        dfs(root.left, target - root.value, path, paths);
-        dfs(root.right, target - root.value, path, paths);
-        // 回溯之前需要将当前结点移除
-        path.remove(path.size() - 1);
+        target -= root.value;
+        path.offerLast(root.value);
+        if (root.left == null && root.right == null && target == 0) {
+            paths.add(new ArrayList<>(path));
+        }
+        pathSumDFS(root.left, target, path, paths);
+        pathSumDFS(root.right, target, path, paths);
+        path.pollLast();
     }
 
     /**
-     * <h3>思路: 深度遍历</h3>
-     * <h3>1. 依然借助路径总和问题的想法, 采用双队列来分别记录遍历的情况和路径和的情况</h3>
-     * <h3>2. 但是问题在于如何在遍历到叶子结点的时候将相应的路径添加进去</h3>
-     * <h3>3. 因为遍历的时候是添加一层的结点进去, 并且没有办法在此时得知该路径是否有效, 所以只用链表是不够的</h3>
-     * <h3>4. 原先的想法就是使用哈希表保存路径和路径和的映射关系, 但是可以使用结点和结点的映射关系</h3>
-     * <h3>5. 前者从逻辑上来说比较直观, 但是效率很差, 因为需要频繁创建链表对象</h3>
-     * <h3>6. 后者虽然在计算和的时候需要遍历, 但是不需要创建大量的对象</h3>
+     * 路径总和 II: 迭代实现, 广度搜索
+     * 1. 依然借助路径总和问题的想法, 采用双队列来分别记录遍历的情况和路径和的情况
+     * 2. 但是问题在于如何在遍历到叶子结点的时候将相应的路径添加进去
+     * 3. 因为遍历的时候是添加一层的结点进去, 并且没有办法在此时得知该路径是否有效, 所以只用链表是不够的
+     * 4. 原先的想法就是使用哈希表保存路径和路径和的映射关系, 但是可以使用结点和结点的映射关系
+     * 5. 前者从逻辑上来说比较直观, 但是效率很差, 因为需要频繁创建链表对象
+     * 6. 后者虽然在计算和的时候需要遍历, 但是不需要创建大量的对象
      */
-    private static List<List<Integer>> findPathSumFromRootBFS(TreeNode root, int target){
+    private static List<List<Integer>> pathSumBFS(TreeNode root, int target){
         Map<TreeNode, TreeNode> map = new HashMap<>();
         List<List<Integer>> paths = new LinkedList<>();
         Queue<TreeNode> queue = new LinkedList<>();
