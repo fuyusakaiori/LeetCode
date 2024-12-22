@@ -1,16 +1,19 @@
-package chapter03.binarytree;
+package chapter03;
 
-import chapter03.TreeNode;
+import utils.TreeNode;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * <h2>二叉树深度与宽度/h2>
- * <h3>1. 二叉树的最大深度</h3>
- * <h3>2. 二叉树的最小深度</h3>
- * <h3>3. 二叉树的最大宽度</h3>
- * <h3>4. 二叉树层平均值</h3>
+ * <p>二叉树深度、宽度、平均值、直径/h2>
+ * <p>1. 二叉树的最大深度</p>
+ * <p>2. 二叉树的最小深度</p>
+ * <p>3. 二叉树的最大宽度</p>
+ * <p>4. 二叉树层平均值</p>
+ * <p>5. 二叉树的直径</p>
+ * <p>6. 二叉树的坡度</p>
+ * <p>7. 二叉树的左叶子之和</p>
  */
 public class BinaryTreeMetrics {
 
@@ -223,4 +226,85 @@ public class BinaryTreeMetrics {
 
     }
 
+    /**
+     * 二叉树的直径
+     */
+    public static class DiameterMetric {
+
+        private static int max = 0;
+
+        public static int diameterOfBinaryTree(TreeNode root) {
+            diameterOfBinaryTreeDFS(root);
+            return max;
+        }
+
+        public static int diameterOfBinaryTreeDFS(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            int leftDepth = diameterOfBinaryTreeDFS(root.left);
+            int rightDepth = diameterOfBinaryTreeDFS(root.right);
+            max = Math.max(max, leftDepth + rightDepth);
+            return Math.max(leftDepth, rightDepth) + 1;
+        }
+
+    }
+
+    /**
+     * 二叉树的坡度
+     */
+    public static class TiltMetric {
+
+        private static int tiltSum = 0;
+
+        /**
+         * 深度优先, 递归实现
+         */
+        public static int findTilt(TreeNode root) {
+            findTiltDFS(root);
+            return tiltSum;
+        }
+
+        public static int findTiltDFS(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            int leftSum = findTiltDFS(root.left);
+            int rightSum = findTiltDFS(root.right);
+            tiltSum += Math.abs(leftSum - rightSum);
+            return leftSum + rightSum + root.value;
+        }
+
+    }
+
+    /**
+     * 二叉树的左叶子之和
+     */
+    public static class LeftLeafSumMetric {
+
+        /**
+         * 深度优先, 递归实现
+         */
+        public static int sumOfLeftLeavesDFS(TreeNode root) {
+            return sumOfLeftLeavesDFS(root, root);
+        }
+
+        public static int sumOfLeftLeavesDFS(TreeNode root, TreeNode parent) {
+            if (root == null) {
+                return 0;
+            }
+            if (parent.left == root && root.left == null && root.right == null) {
+                return root.value;
+            }
+            return sumOfLeftLeavesDFS(root.left, root) + sumOfLeftLeavesDFS(root.right, root);
+        }
+
+        /**
+         * 广度优先, 迭代实现
+         */
+        public static int sumOfLeftLeavesBFS(TreeNode root) {
+
+            return 0;
+        }
+    }
 }

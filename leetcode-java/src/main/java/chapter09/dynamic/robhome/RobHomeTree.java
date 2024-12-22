@@ -1,6 +1,6 @@
 package chapter09.dynamic.robhome;
 
-import chapter03.TreeNode;
+import utils.TreeNode;
 
 import java.util.HashMap;
 import java.util.Map;

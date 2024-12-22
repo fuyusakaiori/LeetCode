@@ -1,10 +1,9 @@
 package chapter03.traverse;
 
-import chapter03.TreeNode;
+import utils.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * <h2>采用递归 + 非递归的方式遍历二叉树结构</h2>

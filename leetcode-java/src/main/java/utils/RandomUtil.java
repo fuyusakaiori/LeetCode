@@ -1,6 +1,5 @@
 package utils;
 
-import chapter03.TreeNode;
 import lombok.Data;
 
 import java.util.HashSet;

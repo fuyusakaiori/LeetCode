@@ -1,6 +1,6 @@
-package chapter03.binarytree;
+package chapter03;
 
-import chapter03.TreeNode;
+import utils.TreeNode;
 
 import java.util.Collections;
 import java.util.LinkedList;
