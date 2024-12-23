@@ -2,7 +2,7 @@ package node
 
 // test
 type ListNode struct {
-	Val  int
+	Val int
 	// WARNING
 	Next *ListNode
 }
@@ -23,6 +23,6 @@ type RandomNode struct {
 // 树节点
 type TreeNode struct {
 	Val   int
-	left  *TreeNode
-	right *TreeNode
+	Left  *TreeNode
+	Right *TreeNode
 }
