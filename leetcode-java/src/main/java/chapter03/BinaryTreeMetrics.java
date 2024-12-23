@@ -33,19 +33,19 @@ public class BinaryTreeMetrics {
         }
 
         /**
-         * 递归实现: 深度优先
+         * 深度优先, 递归实现
          */
-        public static int maxDepthDFS(TreeNode root) {
+        public static int maxDepthDfs(TreeNode root) {
             if (root == null) {
                 return 0;
             }
-            return Math.max(maxDepthDFS(root.left), maxDepthDFS(root.right)) + 1;
+            return Math.max(maxDepthDfs(root.left), maxDepthDfs(root.right)) + 1;
         }
 
         /**
-         * 迭代实现: 广度优先
+         * 广度优先, 迭代实现
          */
-        public static int maxDepthBFS(TreeNode root) {
+        public static int maxDepthBfs(TreeNode root) {
             int maxDepth = 0;
             Queue<TreeNodeWrapper> queue = new LinkedList<>();
             if (root != null) {
@@ -65,14 +65,14 @@ public class BinaryTreeMetrics {
         }
 
         /**
-         * 递归实现: 深度优先
+         * 深度优先, 递归实现
          */
-        public static int minDepthDFS(TreeNode root) {
+        public static int minDepthDfs(TreeNode root) {
             if (root == null) {
                 return 0;
             }
-            int leftMin = minDepthDFS(root.left);
-            int rightMin = minDepthDFS(root.right);
+            int leftMin = minDepthDfs(root.left);
+            int rightMin = minDepthDfs(root.right);
             if (leftMin == 0 || rightMin == 0) {
                 return leftMin != 0 ? leftMin + 1: rightMin + 1;
             }
@@ -80,9 +80,9 @@ public class BinaryTreeMetrics {
         }
 
         /**
-         * 迭代实现: 广度优先, 只要第一次遇到叶子节点就可以直接返回
+         * 广度优先, 迭代实现, 只要第一次遇到叶子节点就可以直接返回
          */
-        public static int minDepthBFS(TreeNode root) {
+        public static int minDepthBfs(TreeNode root) {
             Queue<TreeNodeWrapper> queue = new LinkedList<>();
             if (root != null) {
                 queue.offer(new TreeNodeWrapper(1, root));
@@ -121,26 +121,26 @@ public class BinaryTreeMetrics {
         }
 
         /**
-         * 递归实现: 深度优先
+         * 类层序遍历, 深度优先, 递归实现
          */
-        public static int maxWidthDFS(TreeNode root) {
-            return maxWidthDFS(root, 0, 0, new HashMap<>());
+        public static int maxWidthDfs(TreeNode root) {
+            return maxWidthDfs(root, 0, 0, new HashMap<>());
         }
 
-        public static int maxWidthDFS(TreeNode root, int level, int index, Map<Integer, Integer> map) {
+        public static int maxWidthDfs(TreeNode root, int level, int index, Map<Integer, Integer> map) {
             if (root == null) {
                 return 0;
             }
             map.putIfAbsent(level, index);
-            int leftMax = maxWidthDFS(root.left, level + 1, index * 2, map);
-            int rightMax = maxWidthDFS(root.left, level + 1, index * 2 + 1, map);
+            int leftMax = maxWidthDfs(root.left, level + 1, index * 2, map);
+            int rightMax = maxWidthDfs(root.left, level + 1, index * 2 + 1, map);
             return Math.max(index - map.get(index) + 1, Math.max(leftMax, rightMax));
         }
 
         /**
-         * 迭代实现: 广度优先
+         * 层序遍历, 广度优先, 迭代实现
          */
-        public static int maxWidthBFS(TreeNode root) {
+        public static int maxWidthBfs(TreeNode root) {
             int maxWidth = 0;
             TreeNodeWrapper startWrapper = new TreeNodeWrapper(0, 0, root);
             Queue<TreeNodeWrapper> queue = new LinkedList<>();
@@ -171,31 +171,31 @@ public class BinaryTreeMetrics {
     public static class LevelAverageMetric {
 
         /**
-         * 递归实现: 深度优先
+         * 类层序遍历, 深度优先, 递归实现
          */
-        public static List<Double> averageOfLevelsDFS(TreeNode root) {
+        public static List<Double> averageOfLevelsDfs(TreeNode root) {
             List<Double> averages = new ArrayList<>();
             Map<Integer, List<Double>> map = new HashMap<>();
-            averageOfLevelsDFS(root, 0, map);
+            averageOfLevelsDfs(root, 0, map);
             for (List<Double> level : map.values()) {
                 averages.add(level.stream().collect(Collectors.averagingDouble(Double::doubleValue)));
             }
             return averages;
         }
 
-        public static void averageOfLevelsDFS(TreeNode root, int level, Map<Integer, List<Double>> map) {
+        public static void averageOfLevelsDfs(TreeNode root, int level, Map<Integer, List<Double>> map) {
             if (root == null) {
                 return;
             }
             map.computeIfAbsent(level, key -> new ArrayList<>()).add((double) root.value);
-            averageOfLevelsDFS(root.left, level + 1, map);
-            averageOfLevelsDFS(root.right, level + 1, map);
+            averageOfLevelsDfs(root.left, level + 1, map);
+            averageOfLevelsDfs(root.right, level + 1, map);
         }
 
         /**
-         * 迭代实现: 广度优先
+         * 层序遍历, 广度优先, 迭代实现
          */
-        public static List<Double> averageOfLevelsBFS(TreeNode root) {
+        public static List<Double> averageOfLevelsBfs(TreeNode root) {
             TreeNode currentLevelEnd = root;
             TreeNode nextLevelEnd = null;
             List<Double> averages = new ArrayList<>();
@@ -234,16 +234,16 @@ public class BinaryTreeMetrics {
         private static int max = 0;
 
         public static int diameterOfBinaryTree(TreeNode root) {
-            diameterOfBinaryTreeDFS(root);
+            diameterOfBinaryTreeDfs(root);
             return max;
         }
 
-        public static int diameterOfBinaryTreeDFS(TreeNode root) {
+        public static int diameterOfBinaryTreeDfs(TreeNode root) {
             if (root == null) {
                 return 0;
             }
-            int leftDepth = diameterOfBinaryTreeDFS(root.left);
-            int rightDepth = diameterOfBinaryTreeDFS(root.right);
+            int leftDepth = diameterOfBinaryTreeDfs(root.left);
+            int rightDepth = diameterOfBinaryTreeDfs(root.right);
             max = Math.max(max, leftDepth + rightDepth);
             return Math.max(leftDepth, rightDepth) + 1;
         }
@@ -261,16 +261,16 @@ public class BinaryTreeMetrics {
          * 深度优先, 递归实现
          */
         public static int findTilt(TreeNode root) {
-            findTiltDFS(root);
+            findTiltDfs(root);
             return tiltSum;
         }
 
-        public static int findTiltDFS(TreeNode root) {
+        public static int findTiltDfs(TreeNode root) {
             if (root == null) {
                 return 0;
             }
-            int leftSum = findTiltDFS(root.left);
-            int rightSum = findTiltDFS(root.right);
+            int leftSum = findTiltDfs(root.left);
+            int rightSum = findTiltDfs(root.right);
             tiltSum += Math.abs(leftSum - rightSum);
             return leftSum + rightSum + root.value;
         }
@@ -285,26 +285,47 @@ public class BinaryTreeMetrics {
         /**
          * 深度优先, 递归实现
          */
-        public static int sumOfLeftLeavesDFS(TreeNode root) {
-            return sumOfLeftLeavesDFS(root, root);
+        public static int sumOfLeftLeavesDfs(TreeNode root) {
+            return sumOfLeftLeavesDfs(root, root);
         }
 
-        public static int sumOfLeftLeavesDFS(TreeNode root, TreeNode parent) {
+        public static int sumOfLeftLeavesDfs(TreeNode root, TreeNode parent) {
             if (root == null) {
                 return 0;
             }
             if (parent.left == root && root.left == null && root.right == null) {
                 return root.value;
             }
-            return sumOfLeftLeavesDFS(root.left, root) + sumOfLeftLeavesDFS(root.right, root);
+            return sumOfLeftLeavesDfs(root.left, root) + sumOfLeftLeavesDfs(root.right, root);
         }
 
         /**
          * 广度优先, 迭代实现
          */
-        public static int sumOfLeftLeavesBFS(TreeNode root) {
+        public static int sumOfLeftLeavesBfs(TreeNode root) {
+            int leftLeafSum = 0;
+            Queue<TreeNode> queue = new LinkedList<>();
+            if (root != null) {
+                queue.offer(root);
+            }
+            while (!queue.isEmpty()) {
+                root = queue.poll();
+                if (root.left != null) {
+                    if (isLeaf(root.left)) {
+                        leftLeafSum += root.left.value;
+                    }
+                }
+                if (root.right != null) {
+                    if (!isLeaf(root.right)) {
+                        queue.offer(root.right);
+                    }
+                }
+            }
+            return leftLeafSum;
+        }
 
-            return 0;
+        private static boolean isLeaf(TreeNode root) {
+            return root.left == null && root.right == null;
         }
     }
 }

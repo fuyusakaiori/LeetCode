@@ -31,9 +31,9 @@ public class BinaryTreeBuild {
     public static class PreOrderBuildBinaryTree {
 
         /**
-         * 迭代实现
+         * 深度优先, 迭代实现
          */
-        public static TreeNode buildTreeLoop(int[] infixOrder, int[] preOrder) {
+        public static TreeNode buildTreeIterate(int[] infixOrder, int[] preOrder) {
             int infixIndex = 0, preIndex = 0;
             TreeNode root = new TreeNode(preOrder[preIndex++]);
             LinkedList<TreeNode> stack = new LinkedList<>();
@@ -52,7 +52,7 @@ public class BinaryTreeBuild {
                     }
                     // 循环弹出后发现的第二个不相同的节点就是根节点的右子树
                     node.right = new TreeNode(preOrder[preIndex]);
-                    stack.push(root.right);
+                    stack.push(node.right);
                 }
                 preIndex++;
             }
@@ -60,26 +60,26 @@ public class BinaryTreeBuild {
         }
 
         /**
-         * 递归实现
+         * 深度优先, 递归实现
          */
-        public static TreeNode buildTreeRecursive(int[] infixOrder, int[] preOrder) {
+        public static TreeNode buildTreeRecur(int[] infixOrder, int[] preOrder) {
             Map<Integer, Integer> map = new HashMap<>();
             for (int index = 0; index < infixOrder.length; index++) {
                 map.put(infixOrder[index], index);
             }
-            return buildTreeRecursive(0, 0, preOrder.length - 1, preOrder, map);
+            return buildTreeRecur(0, 0, preOrder.length - 1, preOrder, map);
         }
 
-        public static TreeNode buildTreeRecursive(int index, int left, int right, int[] preOrder, Map<Integer, Integer> map) {
+        public static TreeNode buildTreeRecur(int index, int left, int right, int[] preOrder, Map<Integer, Integer> map) {
             if (left > right) {
                 return null;
             }
             TreeNode root = new TreeNode(preOrder[index]);
             int mid = map.get(preOrder[index]);
             // 左子树递增就可以遍历
-            root.left = buildTreeRecursive(index + 1, left, mid - 1, preOrder, map);
+            root.left = buildTreeRecur(index + 1, left, mid - 1, preOrder, map);
             // 右子树需要跳过所有子树的节点才可以遍历
-            root.right = buildTreeRecursive(index + (mid - left) + 1, mid + 1, right, preOrder, map);
+            root.right = buildTreeRecur(index + (mid - left) + 1, mid + 1, right, preOrder, map);
             return root;
         }
 
@@ -91,9 +91,9 @@ public class BinaryTreeBuild {
     public static class PostOrderBuildBinaryTree {
 
         /**
-         * 迭代实现
+         * 深度优先, 迭代实现
          */
-        public static TreeNode buildTreeLoop(int[] infixOrder, int[] postOrder) {
+        public static TreeNode buildTreeIterate(int[] infixOrder, int[] postOrder) {
             int infixIndex = infixOrder.length - 1, postIndex = postOrder.length - 1;
             TreeNode root = new TreeNode(postOrder[postIndex--]);
             LinkedList<TreeNode> stack = new LinkedList<>();
@@ -118,27 +118,27 @@ public class BinaryTreeBuild {
         }
 
         /**
-         * 递归实现
+         * 深度优先, 递归实现
          */
-        public static TreeNode buildTreeRecursive(int[] infixOrder, int[] postOrder) {
+        public static TreeNode buildTreeRecur(int[] infixOrder, int[] postOrder) {
             Map<Integer, Integer> map = new HashMap<>();
             for (int index = 0; index < infixOrder.length; index++) {
                 map.put(infixOrder[index], index);
             }
             // index 指针遍历的是后序数组, left 和 right 指针遍历的中序数组
-            return buildTreeRecursive(postOrder.length - 1, 0, infixOrder.length - 1, postOrder, map);
+            return buildTreeRecur(postOrder.length - 1, 0, infixOrder.length - 1, postOrder, map);
         }
 
-        public static TreeNode buildTreeRecursive(int index, int left, int right, int[] postOrder, Map<Integer, Integer> map) {
+        public static TreeNode buildTreeRecur(int index, int left, int right, int[] postOrder, Map<Integer, Integer> map) {
             if (left > right) {
                 return null;
             }
             int mid = map.get(postOrder[index]);
             TreeNode root = new TreeNode(postOrder[index]);
             // 左子树需要跳过右子树递减才能遍历: right - mid 是右子树的节点数量, index - (right - mid) 就会跳过右子树的所有节点
-            root.left = buildTreeRecursive(index - (right - mid) - 1, left, mid - 1, postOrder, map);
+            root.left = buildTreeRecur(index - (right - mid) - 1, left, mid - 1, postOrder, map);
             // 右子树递减就可以遍历
-            root.right = buildTreeRecursive(index - 1, mid + 1, right, postOrder, map);
+            root.right = buildTreeRecur(index - 1, mid + 1, right, postOrder, map);
             return root;
         }
         
@@ -150,11 +150,11 @@ public class BinaryTreeBuild {
     public static class MaxBuildBinaryTree {
 
         /**
-         * 迭代实现: 单调栈
+         * 深度优先, 迭代实现, 单调栈
          * <p>1. 从左向右遍历, 如果当前元素小于前驱元素, 那么当前元素只能是前驱元素的右子节点;</p>
          * <p>2. 如果当前元素大于前驱元素, 那么前驱元素只能是当前元素的左子结点, 但不一定是直接相连的左子结点</p>
          */
-        public static TreeNode buildTreeLoop(int[] nums) {
+        public static TreeNode buildTreeStack(int[] nums) {
             TreeNode root = null;
             LinkedList<TreeNode> stack = new LinkedList<>();
             for (int index = 0; index < nums.length; index++) {
@@ -184,18 +184,18 @@ public class BinaryTreeBuild {
         }
 
         /**
-         * 递归实现
+         * 深度优先, 递归实现
          */
-        public static TreeNode buildTreeRecursive(int[] nums) {
-            return buildTreeRecursive(0, nums.length - 1, nums);
+        public static TreeNode buildTreeRecur(int[] nums) {
+            return buildTreeRecur(0, nums.length - 1, nums);
         }
 
-        public static TreeNode buildTreeRecursive(int left, int right, int[] nums) {
+        public static TreeNode buildTreeRecur(int left, int right, int[] nums) {
             if (left > right) {
                 return null;
             }
             // 获取最大的元素的 index
-            int maxNum = 0;
+            int maxNum = Integer.MIN_VALUE;
             int maxIndex = 0;
             for (int index = left; index <= right; index++) {
                 if (nums[index] > maxNum) {
@@ -204,8 +204,8 @@ public class BinaryTreeBuild {
                 }
             }
             TreeNode root = new TreeNode(maxNum);
-            root.left = buildTreeRecursive(left, maxIndex - 1, nums);
-            root.right = buildTreeRecursive(maxIndex + 1, right, nums);
+            root.left = buildTreeRecur(left, maxIndex - 1, nums);
+            root.right = buildTreeRecur(maxIndex + 1, right, nums);
             return root;
         }
 
@@ -219,20 +219,20 @@ public class BinaryTreeBuild {
         /**
          * 深度优先, 递归实现
          */
-        public static TreeNode mergeTreesDFS(TreeNode first, TreeNode second) {
+        public static TreeNode mergeTreesDfs(TreeNode first, TreeNode second) {
             if (first == null || second == null) {
                 return first != null ? first : second;
             }
             TreeNode root = new TreeNode(first.value + second.value);
-            root.left = mergeTreesDFS(first.left, second.left);
-            root.right = mergeTreesDFS(first.right, second.right);
+            root.left = mergeTreesDfs(first.left, second.left);
+            root.right = mergeTreesDfs(first.right, second.right);
             return root;
         }
 
         /**
          * 广度优先, 迭代实现
          */
-        public static TreeNode mergeTreesBFS(TreeNode first, TreeNode second) {
+        public static TreeNode mergeTreesBfs(TreeNode first, TreeNode second) {
             if (first == null) {
                 return second;
             }

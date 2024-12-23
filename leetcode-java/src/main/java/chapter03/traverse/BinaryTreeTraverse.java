@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 /**
- * <h2>采用递归 + 非递归的方式遍历二叉树结构</h2>
- * <h3>1. 二叉树的前序遍历</h3>
- * <h3>2. 二叉树的中序遍历</h3>
- * <h3>3. 二叉树的后序遍历</h3>
+ * <p>采用递归 + 非递归的方式遍历二叉树结构</p>
+ * <p>1. 二叉树的前序遍历</p>
+ * <p>2. 二叉树的中序遍历</p>
+ * <p>3. 二叉树的后序遍历</p>
  */
 @Slf4j
 public class BinaryTreeTraverse {
@@ -22,20 +22,20 @@ public class BinaryTreeTraverse {
         /**
          * 递归实现
          */
-        public static void traverseRecursive(TreeNode root) {
+        public static void traverseRecur(TreeNode root) {
             if (root == null) {
                 return;
             }
             // TODO 这里可以做任何操作
             log.info("node value: {}", root.value);
-            traverseRecursive(root.left);
-            traverseRecursive(root.right);
+            traverseRecur(root.left);
+            traverseRecur(root.right);
         }
 
         /**
          * 迭代实现
          */
-        public static void traverseLoop(TreeNode root) {
+        public static void traverseIterate(TreeNode root) {
             LinkedList<TreeNode> stack = new LinkedList<>();
             if (root != null) {
                 stack.push(root);
@@ -55,7 +55,7 @@ public class BinaryTreeTraverse {
         }
 
         /**
-         * morris
+         * 莫里斯实现
          */
         public static void traverseMorris(TreeNode root) {
             TreeNode current = root;
@@ -92,20 +92,20 @@ public class BinaryTreeTraverse {
         /**
          * 递归实现
          */
-        public static void traverseRecursive(TreeNode root) {
+        public static void traverseRecur(TreeNode root) {
             if (root == null) {
                 return;
             }
-            traverseRecursive(root.left);
+            traverseRecur(root.left);
             // TODO 这里可以做任何操作
             log.info("node value: {}", root.value);
-            traverseRecursive(root.right);
+            traverseRecur(root.right);
         }
 
         /**
          * 迭代实现
          */
-        public static void traverseLoop(TreeNode root) {
+        public static void traverseIterate(TreeNode root) {
             LinkedList<TreeNode> stack = new LinkedList<>();
             while (!stack.isEmpty() || root != null) {
                 if (root != null) {
@@ -121,7 +121,7 @@ public class BinaryTreeTraverse {
         }
 
         /**
-         * morris
+         * 莫里斯实现
          */
         public static void traverseMorris(TreeNode root) {
             TreeNode current = root;
@@ -159,12 +159,12 @@ public class BinaryTreeTraverse {
         /**
          * 递归实现
          */
-        public static void traverseRecursive(TreeNode root) {
+        public static void traverseRecur(TreeNode root) {
             if (root == null) {
                 return;
             }
-            traverseRecursive(root.left);
-            traverseRecursive(root.right);
+            traverseRecur(root.left);
+            traverseRecur(root.right);
             // TODO 这里可以做任何操作
             log.info("node value: {}", root.value);
         }
@@ -172,7 +172,7 @@ public class BinaryTreeTraverse {
         /**
          * 迭代实现: 双栈实现
          */
-        public static void traverseLoop(TreeNode root) {
+        public static void traverseIterate(TreeNode root) {
             LinkedList<TreeNode> first = new LinkedList<>();
             LinkedList<TreeNode> second = new LinkedList<>();
             if (root != null) {
@@ -196,7 +196,7 @@ public class BinaryTreeTraverse {
         /**
          * 迭代实现: 单栈实现
          */
-        public static void traverseLoopOptimize(TreeNode root) {
+        public static void traverseIterateOptimize(TreeNode root) {
             TreeNode current = null;
             TreeNode last = root;
             LinkedList<TreeNode> stack = new LinkedList<>();
@@ -217,7 +217,7 @@ public class BinaryTreeTraverse {
         }
 
         /**
-         * morris
+         * 莫里斯实现
          */
         public static void traverseMorris(TreeNode root) {
             TreeNode current = root;
@@ -278,30 +278,30 @@ public class BinaryTreeTraverse {
     public static class LevelOrderTraverse {
 
         /**
-         * 递归实现
+         * 深度优先, 递归实现
          */
-        public static void traverseRecursive(TreeNode root) {
+        public static void traverseDfs(TreeNode root) {
             Map<Integer, List<Integer>> map = new HashMap<>();
-            traverseRecursive(root, 0, map);
+            traverseDfs(root, 0, map);
             for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
                 log.info("level: {}, nodes: {}", entry.getKey(), entry.getValue());
             }
         }
 
-        public static void traverseRecursive(TreeNode root, int level, Map<Integer, List<Integer>> map) {
+        public static void traverseDfs(TreeNode root, int level, Map<Integer, List<Integer>> map) {
             if (root == null) {
                 return;
             }
             // TODO computeIfAbsent 好像有点慢
             map.computeIfAbsent(level, k -> new LinkedList<>()).add(root.value);
-            traverseRecursive(root.left, level + 1, map);
-            traverseRecursive(root.right, level + 1, map);
+            traverseDfs(root.left, level + 1, map);
+            traverseDfs(root.right, level + 1, map);
         }
 
         /**
-         * 迭代实现: 从上到下的层序遍历
+         * 广度优先, 迭代实现: 从上到下的层序遍历
          */
-        public static void traverseLoopTop(TreeNode root) {
+        public static void traverseBfsTop(TreeNode root) {
             // 记录当前层的节点
             TreeNode currentLevelEnd = root;
             // 记录下一层的节点
@@ -338,9 +338,9 @@ public class BinaryTreeTraverse {
         }
 
         /**
-         * 迭代实现: 从下到上的层序遍历, 其实就是从上到下遍历, 然后反向插入
+         * 广度优先, 迭代实现: 从下到上的层序遍历, 其实就是从上到下遍历, 然后反向插入
          */
-        public static void traverseLoopDown(TreeNode root) {
+        public static void traverseBfsDown(TreeNode root) {
             // 当前层的末尾节点
             TreeNode currentLevelEnd = root;
             // 下一层的末尾节点
