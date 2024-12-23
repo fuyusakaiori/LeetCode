@@ -1,13 +1,15 @@
 package main
 
+import "leetcode-go/node"
+
 type ListReverser struct {
 }
 
 // 反转链表: 迭代
-func (reverse *ListReverser) ReverseListLoop(head *ListNode) *ListNode {
-	var previous *ListNode = nil
-	var current *ListNode = head
-	var next *ListNode = nil
+func (reverse *ListReverser) ReverseListLoop(head *node.ListNode) *node.ListNode {
+	var previous *node.ListNode = nil
+	var current *node.ListNode = head
+	var next *node.ListNode = nil
 	for current != nil {
 		next = current.Next
 		current.Next = previous
@@ -18,7 +20,7 @@ func (reverse *ListReverser) ReverseListLoop(head *ListNode) *ListNode {
 }
 
 // 反转链表: 递归
-func (reverse *ListReverser) ReverseListRecursive(head *ListNode) *ListNode {
+func (reverse *ListReverser) ReverseListRecursive(head *node.ListNode) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -29,8 +31,8 @@ func (reverse *ListReverser) ReverseListRecursive(head *ListNode) *ListNode {
 }
 
 // 反转链表 II
-func (reverse *ListReverser) ReverseBetween(head *ListNode, left, right int) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
+func (reverse *ListReverser) ReverseBetween(head *node.ListNode, left, right int) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
 	current := dummy
 	for index := 0; index < left - 1; index++ {
 		current = current.Next
@@ -51,8 +53,8 @@ func (reverse *ListReverser) ReverseBetween(head *ListNode, left, right int) *Li
 }
 
 // 反转链表: K 个一组
-func (reverse *ListReverser) ReverseKGroup(head *ListNode, k int) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
+func (reverse *ListReverser) ReverseKGroup(head *node.ListNode, k int) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
 	current, previous := head, dummy
 	for current != nil {
 		// 注意: 移动的单位只能是 k - 1
@@ -76,8 +78,8 @@ func (reverse *ListReverser) ReverseKGroup(head *ListNode, k int) *ListNode {
 }
 
 // 反转链表: 两两交换
-func (reverse *ListReverser) SwapPairs(head *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
+func (reverse *ListReverser) SwapPairs(head *node.ListNode) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
 	current := dummy
 	for current.Next != nil && current.Next.Next != nil {
 		node1, node2 := current.Next, current.Next.Next

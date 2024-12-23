@@ -1,11 +1,13 @@
 package main
 
+import "leetcode-go/node"
+
 type ListPalindromer struct {
 
 }
 
 // 回文链表
-func (palindromer *ListPalindromer) isPalindrome(head *ListNode) bool {
+func (palindromer *ListPalindromer) isPalindrome(head *node.ListNode) bool {
 	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
 		slow = slow.Next
@@ -25,9 +27,9 @@ func (palindromer *ListPalindromer) isPalindrome(head *ListNode) bool {
 }
 
 // 回文链表: 数组 + 双指针
-func isPalindromeV1(head *ListNode) bool {
+func isPalindromeV1(head *node.ListNode) bool {
 	// 1. 遍历链表
-	stack := make([]*ListNode, 0)
+	stack := make([]*node.ListNode, 0)
 	for head != nil {
 		stack = append(stack, head)
 		head = head.Next
@@ -45,7 +47,7 @@ func isPalindromeV1(head *ListNode) bool {
 }
 
 // 回文链表: 快慢指针 + 反转链表
-func isPalindromeV2(head *ListNode) bool {
+func isPalindromeV2(head *node.ListNode) bool {
 	slow, fast := head, head
 	// 1. 快慢指针找中点
 	for fast != nil && fast.Next != nil {
@@ -53,8 +55,8 @@ func isPalindromeV2(head *ListNode) bool {
 		fast = fast.Next.Next
 	}
 	// 2. 反转链表
-	var current *ListNode = slow
-	var previous *ListNode = nil
+	var current *node.ListNode = slow
+	var previous *node.ListNode = nil
 	for current != nil {
 		next := current.Next
 		current.Next = previous

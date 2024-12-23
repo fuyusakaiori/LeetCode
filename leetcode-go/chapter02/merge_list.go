@@ -1,12 +1,14 @@
 package main
 
+import "leetcode-go/node"
+
 type ListMerger struct {
 
 }
 
 // 合并两个有序链表
-func (merger *ListMerger) MergeTwoLists(first, second *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0}
+func (merger *ListMerger) MergeTwoLists(first, second *node.ListNode) *node.ListNode {
+	dummy := &node.ListNode{Val: 0}
 	current := dummy
 	for first != nil && second != nil {
 		if first.Val < second.Val {
@@ -28,14 +30,14 @@ func (merger *ListMerger) MergeTwoLists(first, second *ListNode) *ListNode {
 }
 
 // 合并 K 个有序链表
-func (merger *ListMerger) MergeKLists(lists []*ListNode) *ListNode {
+func (merger *ListMerger) MergeKLists(lists []*node.ListNode) *node.ListNode {
 	if len(lists) == 0 {
 		return nil
 	}
 	return merger.fork(lists, 0, len(lists) - 1)
 }
 
-func (merger *ListMerger) fork(lists []*ListNode, left, right int) *ListNode {
+func (merger *ListMerger) fork(lists []*node.ListNode, left, right int) *node.ListNode {
 	if left >= right {
 		return lists[left]
 	}

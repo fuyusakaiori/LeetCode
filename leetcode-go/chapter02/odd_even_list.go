@@ -1,9 +1,11 @@
 package main
 
+import "leetcode-go/node"
+
 type ListOddEvener struct {}
 
 // 奇偶链表: 模拟
-func (oddEvener *ListOddEvener) oddEvenList(head *ListNode) *ListNode {
+func (oddEvener *ListOddEvener) oddEvenList(head *node.ListNode) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -23,13 +25,13 @@ func (oddEvener *ListOddEvener) oddEvenList(head *ListNode) *ListNode {
 }
 
 // 奇偶链表 => 分割链表
-func (oddEvener *ListOddEvener) oddEvenListSplit(head *ListNode) *ListNode {
+func (oddEvener *ListOddEvener) oddEvenListSplit(head *node.ListNode) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 	flag := true
 	current := head
-	oDummy, eDummy := &ListNode{Val: 0, Next: head}, &ListNode{Val: 0, Next: head.Next}
+	oDummy, eDummy := &node.ListNode{Val: 0, Next: head}, &node.ListNode{Val: 0, Next: head.Next}
 	oCurrent, eCurrent := oDummy, eDummy
 	for current != nil {
 		if flag {

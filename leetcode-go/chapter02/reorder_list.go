@@ -1,9 +1,11 @@
 package main
 
+import "leetcode-go/node"
+
 type ListReorder struct {}
 
 // 重排链表
-func (reorder *ListReorder) ReorderList(head *ListNode) *ListNode {
+func (reorder *ListReorder) ReorderList(head *node.ListNode) *node.ListNode {
 	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
 		slow = slow.Next

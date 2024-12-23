@@ -1,12 +1,15 @@
 package main
 
-import "math"
+import (
+	"leetcode-go/node"
+	"math"
+)
 
 type ListIntersecter struct {}
 
 // 相交链表: 哈希表
-func (intersection *ListIntersecter) GetIntersectionNodeHash(first, second *ListNode) *ListNode {
-	set := make(map[*ListNode]struct{})
+func (intersection *ListIntersecter) GetIntersectionNodeHash(first, second *node.ListNode) *node.ListNode {
+	set := make(map[*node.ListNode]struct{})
 	for first != nil {
 		set[first] = struct{}{}
 		first = first.Next
@@ -21,7 +24,7 @@ func (intersection *ListIntersecter) GetIntersectionNodeHash(first, second *List
 }
 
 // 相交链表: 计算长度
-func (intersection *ListIntersecter) GetIntersectionNode(first, second *ListNode) *ListNode {
+func (intersection *ListIntersecter) GetIntersectionNode(first, second *node.ListNode) *node.ListNode {
 	firstLength := intersection.getLength(first)
 	secondLength := intersection.getLength(second)
 	diffLength := int(math.Abs(float64(firstLength) - float64(secondLength)))
@@ -42,7 +45,7 @@ func (intersection *ListIntersecter) GetIntersectionNode(first, second *ListNode
 	return first
 }
 
-func (intersection *ListIntersecter) getLength(list *ListNode) int {
+func (intersection *ListIntersecter) getLength(list *node.ListNode) int {
 	length := 0
 	for list != nil {
 		list = list.Next

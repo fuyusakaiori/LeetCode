@@ -1,15 +1,17 @@
 package main
 
+import "leetcode-go/node"
+
 type ListRotator struct {}
 
 // 旋转链表
-func (rotator *ListRotator) RotateRightLength(head *ListNode, k int) *ListNode {
+func (rotator *ListRotator) RotateRightLength(head *node.ListNode, k int) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 	length := rotator.getLength(head)
 	offset := k % length
-	dummy := &ListNode{Val: 0}
+	dummy := &node.ListNode{Val: 0}
 	current := head
 	for index := 0; index < length - offset - 1; index++ {
 		current = current.Next
@@ -27,7 +29,7 @@ func (rotator *ListRotator) RotateRightLength(head *ListNode, k int) *ListNode {
 }
 
 // 旋转链表 => 删除倒数第 N 个节点
-func (rotator *ListRotator) RotateRight(head *ListNode, k int) *ListNode {
+func (rotator *ListRotator) RotateRight(head *node.ListNode, k int) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -40,14 +42,14 @@ func (rotator *ListRotator) RotateRight(head *ListNode, k int) *ListNode {
 		first = first.Next
 		second = second.Next
 	}
-	dummy := &ListNode{Val: 0}
+	dummy := &node.ListNode{Val: 0}
 	first.Next = head
 	dummy.Next = second.Next
 	second.Next = nil
 	return dummy.Next
 }
 
-func (rotator *ListRotator) getLength(head *ListNode) int {
+func (rotator *ListRotator) getLength(head *node.ListNode) int {
 	length := 0
 	for head != nil {
 		length++
@@ -57,7 +59,7 @@ func (rotator *ListRotator) getLength(head *ListNode) int {
 }
 
 // 旋转链表: 类似于删除倒数第 N 个节点
-func rotateRight(head *ListNode, k int) *ListNode {
+func rotateRight(head *node.ListNode, k int) *node.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}

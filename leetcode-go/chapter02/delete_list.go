@@ -1,9 +1,11 @@
 package main
 
+import "leetcode-go/node"
+
 type ListDeleter struct {}
 
 // 删除排序链表中的重复元素
-func (deleter *ListDeleter) DeleteDuplicates(head *ListNode) *ListNode {
+func (deleter *ListDeleter) DeleteDuplicates(head *node.ListNode) *node.ListNode {
 	current := head
 	for current != nil && current.Next != nil {
 		if current.Val == current.Next.Val {
@@ -16,8 +18,8 @@ func (deleter *ListDeleter) DeleteDuplicates(head *ListNode) *ListNode {
 }
 
 // 删除排序链表中的重复元素 II
-func (deleter *ListDeleter) DeleteDuplicatesII(head *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
+func (deleter *ListDeleter) DeleteDuplicatesII(head *node.ListNode) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
 	current := dummy
 	for current.Next != nil && current.Next.Next != nil {
 		if current.Next.Val == current.Next.Next.Val {
@@ -33,9 +35,9 @@ func (deleter *ListDeleter) DeleteDuplicatesII(head *ListNode) *ListNode {
 }
 
 // 删除链表的倒数第 N 个节点: 计算长度
-func (deleter *ListDeleter) RemoveNthFromEnd(head *ListNode, n int) *ListNode {
+func (deleter *ListDeleter) RemoveNthFromEnd(head *node.ListNode, n int) *node.ListNode {
 	length := deleter.getLength(head)
-	dummy := &ListNode{Val: 0, Next: head}
+	dummy := &node.ListNode{Val: 0, Next: head}
 	current := dummy
 	for index := 0; index < length - n; index++ {
 		current = current.Next
@@ -45,8 +47,8 @@ func (deleter *ListDeleter) RemoveNthFromEnd(head *ListNode, n int) *ListNode {
 }
 
 // 删除链表的倒数第 N 个节点: 双指针
-func (deleter *ListDeleter) RemoveNthFromEndDoublePointer(head *ListNode, n int) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
+func (deleter *ListDeleter) RemoveNthFromEndDoublePointer(head *node.ListNode, n int) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
 	first, second := head, dummy
 	for index := 0; index < n; index++ {
 		first = first.Next
@@ -59,7 +61,7 @@ func (deleter *ListDeleter) RemoveNthFromEndDoublePointer(head *ListNode, n int)
 	return dummy.Next
 }
 
-func (deleter *ListDeleter) getLength(head *ListNode) int {
+func (deleter *ListDeleter) getLength(head *node.ListNode) int {
 	length := 0
 	for head != nil {
 		length++

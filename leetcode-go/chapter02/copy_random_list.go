@@ -1,15 +1,17 @@
 package main
 
+import "leetcode-go/node"
+
 type RandomListCopier struct {
 	
 }
 
 // 随机链表的复制: 哈希表
-func (copier *RandomListCopier) CopyRandomListHash(head *RandomNode) *RandomNode {
+func (copier *RandomListCopier) CopyRandomListHash(head *node.RandomNode) *node.RandomNode {
 	current := head
-	nodeMap := make(map[*RandomNode]*RandomNode)
+	nodeMap := make(map[*node.RandomNode]*node.RandomNode)
 	for current != nil {
-		nodeMap[current] = &RandomNode{Val: current.Val}
+		nodeMap[current] = &node.RandomNode{Val: current.Val}
 		current = current.Next
 	}
 	current = head
@@ -22,10 +24,10 @@ func (copier *RandomListCopier) CopyRandomListHash(head *RandomNode) *RandomNode
 }
 
 // 随机链表的复制: 不依赖哈希表
-func (copier *RandomListCopier) CopyRandomList(head *RandomNode) *RandomNode {
+func (copier *RandomListCopier) CopyRandomList(head *node.RandomNode) *node.RandomNode {
 	current := head
 	for current != nil {
-		node := &RandomNode{Val: current.Val, Next: current.Next}
+		node := &node.RandomNode{Val: current.Val, Next: current.Next}
 		current.Next = node
 		current = current.Next.Next
 	}
@@ -37,7 +39,7 @@ func (copier *RandomListCopier) CopyRandomList(head *RandomNode) *RandomNode {
 		current = current.Next.Next
 	}
 	current = head
-	dummy := &RandomNode{Val: 0}
+	dummy := &node.RandomNode{Val: 0}
 	clone := dummy
 	for current != nil {
 		clone.Next = current.Next

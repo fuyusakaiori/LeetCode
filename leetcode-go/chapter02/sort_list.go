@@ -1,23 +1,24 @@
 package main
 
 import (
+	"leetcode-go/node"
 	"slices"
 )
 
 type ListSorter struct {}
 
 // 排序链表: 直接调用排序方法
-func (sorter *ListSorter) SortListApi(head *ListNode) *ListNode {
+func (sorter *ListSorter) SortListApi(head *node.ListNode) *node.ListNode {
 	current := head
-	nodes := make([]*ListNode, 0)
+	nodes := make([]*node.ListNode, 0)
 	for current != nil {
 		nodes = append(nodes, current)
 		current = current.Next
 	}
-	slices.SortFunc(nodes, func(first, second *ListNode) int {
+	slices.SortFunc(nodes, func(first, second *node.ListNode) int {
 		return first.Val - second.Val
 	})
-	dummy := &ListNode{Val: 0}
+	dummy := &node.ListNode{Val: 0}
 	current = dummy
 	for _, node := range nodes {
 		node.Next = nil
@@ -28,11 +29,11 @@ func (sorter *ListSorter) SortListApi(head *ListNode) *ListNode {
 }
 
 // 排序链表: 迭代实现归并排序
-func (sorter *ListSorter) SortList(head *ListNode) *ListNode {
-	dummy := &ListNode{Val: 0, Next: head}
-	var current *ListNode = dummy
-	var previous *ListNode = dummy
-	var next *ListNode = nil
+func (sorter *ListSorter) SortList(head *node.ListNode) *node.ListNode {
+	dummy := &node.ListNode{Val: 0, Next: head}
+	var current *node.ListNode = dummy
+	var previous *node.ListNode = dummy
+	var next *node.ListNode = nil
 	length := sorter.getLength(head)
 	merger := &ListMerger{}
 	for subLength := 1; subLength < length; subLength <<= 1 {
@@ -66,7 +67,7 @@ func (sorter *ListSorter) SortList(head *ListNode) *ListNode {
 	return dummy.Next
 }
 
-func (sorter *ListSorter) getLength(head *ListNode) int {
+func (sorter *ListSorter) getLength(head *node.ListNode) int {
 	length := 0
 	for head != nil {
 		length++
