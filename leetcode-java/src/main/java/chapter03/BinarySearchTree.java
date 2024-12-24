@@ -150,9 +150,9 @@ public class BinarySearchTree {
         private static int minDiff = Integer.MAX_VALUE;
 
         /**
-         * 迭代实现
+         * 中序遍历, 迭代实现
          */
-        public static int getMinDiffLoop(TreeNode root) {
+        public static int getMinDiffIterate(TreeNode root) {
             int minDiff = Integer.MAX_VALUE;
             int previous = -1;
             LinkedList<TreeNode> stack = new LinkedList<>();
@@ -173,23 +173,23 @@ public class BinarySearchTree {
         }
 
         /**
-         * 递归实现
+         * 中序遍历, 递归实现
          */
-        public static int getMinDiffRecursive(TreeNode root) {
-            getMinDiffDFS(root);
+        public static int getMinDiffRecur(TreeNode root) {
+            getMinDiffDfs(root);
             return minDiff;
         }
 
-        public static void getMinDiffDFS(TreeNode root) {
+        public static void getMinDiffDfs(TreeNode root) {
             if (root == null) {
                 return;
             }
-            getMinDiffDFS(root.left);
+            getMinDiffDfs(root.left);
             if (previous != -1) {
                 minDiff = Math.min(minDiff, Math.abs(root.value - previous));
             }
             previous = root.value;
-            getMinDiffDFS(root.right);
+            getMinDiffDfs(root.right);
         }
 
     }
@@ -202,23 +202,23 @@ public class BinarySearchTree {
         /**
          * 递归实现
          */
-        public static int rangeSumBSTRecursive(TreeNode root, int low, int high) {
+        public static int rangeSumBSTDfs(TreeNode root, int low, int high) {
             if (root == null) {
                 return 0;
             }
             if (root.value > high) {
-                return rangeSumBSTRecursive(root.left, low, high);
+                return rangeSumBSTDfs(root.left, low, high);
             }
             if (root.value < low) {
-                return rangeSumBSTRecursive(root.right, low, high);
+                return rangeSumBSTDfs(root.right, low, high);
             }
-            return root.value + rangeSumBSTRecursive(root.left, low, high) + rangeSumBSTRecursive(root.right, low, high);
+            return root.value + rangeSumBSTDfs(root.left, low, high) + rangeSumBSTDfs(root.right, low, high);
         }
 
         /**
          * 迭代实现: 使用任何遍历方式其实都是可以的, 但是建议使用层序遍历, 可以剪枝优化
          */
-        public static int rangeSumBSTLoop(TreeNode root, int low, int high) {
+        public static int rangeSumBSTBfs(TreeNode root, int low, int high) {
             int rangeSum = 0;
             Queue<TreeNode> queue = new LinkedList<>();
             if (root != null) {
@@ -258,9 +258,9 @@ public class BinarySearchTree {
         private static int maxFrequency = 0;
 
         /**
-         * 迭代实现: 中序遍历
+         * 中序遍历, 迭代实现
          */
-        public static int[] findModeLoop(TreeNode root) {
+        public static int[] findModeIterate(TreeNode root) {
             int previous = -1;
             int frequency = 0;
             int maxFrequency = 0;
@@ -297,11 +297,11 @@ public class BinarySearchTree {
         }
 
         /**
-         * 递归实现: 中序遍历
+         * 中序遍历, 递归实现
          */
-        public static int[] findModeRecursive(TreeNode root) {
+        public static int[] findModeRecur(TreeNode root) {
             List<Integer> modes = new ArrayList<>();
-            findModeRecursive(root, modes);
+            findModeRecur(root, modes);
             int[] modeArray = new int[modes.size()];
             for (int index = 0; index < modeArray.length; index++) {
                 modeArray[index] = modes.get(index);
@@ -309,13 +309,13 @@ public class BinarySearchTree {
             return modeArray;
         }
 
-        public static void findModeRecursive(TreeNode root, List<Integer> modes) {
+        public static void findModeRecur(TreeNode root, List<Integer> modes) {
             if (root == null) {
                 return;
             }
-            findModeRecursive(root.left, modes);
+            findModeRecur(root.left, modes);
             update(root.value, modes);
-            findModeRecursive(root.right, modes);
+            findModeRecur(root.right, modes);
         }
 
         /**
@@ -378,17 +378,17 @@ public class BinarySearchTree {
 
         /**
          * 不同的二叉搜索树: 记忆化递归
-         * 1. 本质是动态规划
-         * 2. 每次都将 n 值分别作为根结点, 然后左边的数字就是左子树的结点, 右边的数字就是右子树的结点
-         * 3. 此时左子树的结点数一定小于 n, 小于 n 的二叉搜索树的数量此前已经算过, 所以可以直接得到
-         * 4. 右子树的种数也是同理的
-         * 5. 然后以当前值为根结点的二叉搜索树的种数就是 左子树的数量 * 右子树的数量
+         * <p>1. 本质是动态规划</p>
+         * <p>2. 每次都将 n 值分别作为根结点, 然后左边的数字就是左子树的结点, 右边的数字就是右子树的结点</p>
+         * <p>3. 此时左子树的结点数一定小于 n, 小于 n 的二叉搜索树的数量此前已经算过, 所以可以直接得到</p>
+         * <p>4. 右子树的种数也是同理的</p>
+         * <p>5. 然后以当前值为根结点的二叉搜索树的种数就是 左子树的数量 * 右子树的数量</p>
          */
-        public static int numTreesRecursive(int n) {
-            return numTreesRecursive(n, new int[n + 1]);
+        public static int numTreesRecur(int n) {
+            return numTreesRecur(n, new int[n + 1]);
         }
 
-        public static int numTreesRecursive(int n, int[] dp) {
+        public static int numTreesRecur(int n, int[] dp) {
             if (n == 0 || n == 1) {
                 return 1;
             }
@@ -397,7 +397,7 @@ public class BinarySearchTree {
             }
             int nums = 0;
             for (int index = 0; index < n; index++) {
-                nums += numTreesRecursive(index, dp) * numTreesRecursive(n - index - 1, dp);
+                nums += numTreesRecur(index, dp) * numTreesRecur(n - index - 1, dp);
             }
             dp[n] = nums;
             return nums;
@@ -422,11 +422,11 @@ public class BinarySearchTree {
 
         /**
          * 不同的二叉搜索树 II
-         * 1. 依然需要选择 1~n 中的每个数字作为作为根结点
-         * 2. 但是这个时候需要得到的是左边和右边的具体有哪些树, 不只是树的种类
-         * 3. 所以这个题就可以翻译成构建树的题目, 只不过需要构建出所有可能的组合
-         * 4. 所以最基本的想法就是要递归, 并且设置边界
-         * 5. 不过区别于构建一棵树, 仅返回一个结点就好, 这里需要构建很多棵树, 所以需要返回树的集合
+         * <p>1. 依然需要选择 1~n 中的每个数字作为作为根结点</p>
+         * <p>2. 但是这个时候需要得到的是左边和右边的具体有哪些树, 不只是树的种类</p>
+         * <p>3. 所以这个题就可以翻译成构建树的题目, 只不过需要构建出所有可能的组合</p>
+         * <p>4. 所以最基本的想法就是要递归, 并且设置边界</p>
+         * <p>5. 不过区别于构建一棵树, 仅返回一个结点就好, 这里需要构建很多棵树, 所以需要返回树的集合</p>
          * 注: 这个题比刚才的要麻烦, 但是其实思路也是很简单的
          */
         public static List<TreeNode> generateTrees(int n) {
@@ -562,7 +562,7 @@ public class BinarySearchTree {
         /**
          * 中序遍历, 深度优先, 迭代实现
          */
-        public static int kthSmallestLoop(TreeNode root, int kth) {
+        public static int kthSmallestIterate(TreeNode root, int kth) {
             LinkedList<TreeNode> stack = new LinkedList<>();
             while (!stack.isEmpty() || root != null) {
                 if (root != null) {
@@ -582,20 +582,20 @@ public class BinarySearchTree {
         /**
          * 中序遍历, 深度优先, 递归实现, 不推荐
          */
-        public static int kthSmallestRecursive(TreeNode root, int k) {
+        public static int kthSmallestRecur(TreeNode root, int k) {
             kth = k;
-            return kthSmallestRecursive(root);
+            return kthSmallestRecur(root);
         }
 
-        public static int kthSmallestRecursive(TreeNode root) {
+        public static int kthSmallestRecur(TreeNode root) {
             if (root == null) {
                 return 0;
             }
-            int left = kthSmallestRecursive(root.left);
+            int left = kthSmallestRecur(root.left);
             if (--kth == 0) {
                 return root.value;
             }
-            int right = kthSmallestRecursive(root.right);
+            int right = kthSmallestRecur(root.right);
             return left != 0 ? left : right;
         }
 
@@ -648,7 +648,7 @@ public class BinarySearchTree {
         /**
          * 中序遍历, 深度优先, 迭代实现
          */
-        public static void recoverTreeLoop(TreeNode root) {
+        public static void recoverTreeIterate(TreeNode root) {
             TreeNode previous = null;
             TreeNode first = null, second = null;
             LinkedList<TreeNode> stack = new LinkedList<>();
@@ -680,7 +680,7 @@ public class BinarySearchTree {
         /**
          * 中序遍历, 深度优先, 递归实现
          */
-        public static void recoverTreeRecursive(TreeNode root) {
+        public static void recoverTreeRecur(TreeNode root) {
             recoverTree(root);
             swap(first, second);
         }

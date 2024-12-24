@@ -37,15 +37,15 @@ public class BinaryTreeValidate {
         }
 
         /**
-         * 套路
-         * 1. 父结点需要比较左子树返回的最大值和右子树返回的最小值, 然后确定是否有效
-         * 2. 这里需要返回三个信息, 而函数只能够有一个返回值, 所以需要封装三个条件
+         * 套路解决, 递归实现
+         * <p>1. 父结点需要比较左子树返回的最大值和右子树返回的最小值, 然后确定是否有效</p>
+         * <p>2. 这里需要返回三个信息, 而函数只能够有一个返回值, 所以需要封装三个条件</p>
          */
-        public static boolean isValidate(TreeNode root) {
-            return isValidateFormula(root).isValidate;
+        public static boolean isValidateBst(TreeNode root) {
+            return isValidate(root).isValidate;
         }
 
-        public static TreeNodeWrapper isValidateFormula(TreeNode root) {
+        public static TreeNodeWrapper isValidate(TreeNode root) {
             if (root == null) {
                 return null;
             }
@@ -54,16 +54,16 @@ public class BinaryTreeValidate {
             int minValue = root.value;
             int maxValue = root.value;
             // 2. 深度遍历
-            TreeNodeWrapper left = isValidateFormula(root.left);
-            TreeNodeWrapper right = isValidateFormula(root.right);
+            TreeNodeWrapper left = isValidate(root.left);
+            TreeNodeWrapper right = isValidate(root.right);
             // 3. 判断当前子树的最小和最大值, 用于递归返回的时候使用
             if (left != null) {
-                // 其实可以只用更新最小值
+                // 其实可以只用更新最大值
                 minValue = Math.min(minValue, left.minValue);
                 maxValue = Math.max(maxValue, left.maxValue);
             }
             if (right != null) {
-                // 其实可以只用更新最大值
+                // 其实可以只用更新最小值
                 minValue = Math.min(minValue, right.minValue);
                 maxValue = Math.max(maxValue, right.maxValue);
             }
@@ -80,7 +80,7 @@ public class BinaryTreeValidate {
         /**
          * 中序遍历: 迭代实现
          */
-        public static boolean isValidateLoop(TreeNode root) {
+        public static boolean isValidateIterate(TreeNode root) {
             long previous = Long.MIN_VALUE;
             LinkedList<TreeNode> stack = new LinkedList<>();
             while (!stack.isEmpty() || root != null) {
@@ -100,22 +100,22 @@ public class BinaryTreeValidate {
         }
 
         /**
-         * 中序遍历: 递归实现
-         * 1. 自顶向下的方式, 不停地维护一个区间, 区间具有最大值和最小值
-         * 2. 遍历到的结点的值必须在这个区间内, 否则就不满足二叉搜索树的条件
+         * 递归实现
+         * <p>1. 自顶向下的方式, 不停地维护一个区间, 区间具有最大值和最小值</p>
+         * <p>2. 遍历到的结点的值必须在这个区间内, 否则就不满足二叉搜索树的条件</p>
          */
-        public static boolean isValidateRecursive(TreeNode root) {
-            return isValidateRecursive(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        public static boolean isValidateRecur(TreeNode root) {
+            return isValidateRecur(root, Long.MIN_VALUE, Long.MAX_VALUE);
         }
 
-        public static boolean isValidateRecursive(TreeNode root, long minValue, long maxValue) {
+        public static boolean isValidateRecur(TreeNode root, long minValue, long maxValue) {
             if (root == null) {
                 return true;
             }
             if (root.value <= minValue || root.value >= maxValue) {
                 return false;
             }
-            return isValidateRecursive(root.left, minValue, root.value) && isValidateRecursive(root.right, root.value, maxValue);
+            return isValidateRecur(root.left, minValue, root.value) && isValidateRecur(root.right, root.value, maxValue);
         }
 
 
@@ -123,8 +123,8 @@ public class BinaryTreeValidate {
 
     /**
      * 平衡二叉树验证
-     * (1) 公式化: 模拟, 封装需要的信息
-     * (2) 后序遍历: 平衡二叉树会优先比较左子树和右子树的高度, 所以可以采用类似后序遍历的做法
+     * <p>(1) 公式化: 模拟, 封装需要的信息</p>
+     * <p>(2) 后序遍历: 平衡二叉树会优先比较左子树和右子树的高度, 所以可以采用类似后序遍历的做法</p>
      */
     public static class BalanceBinaryTreeValidate {
 
@@ -139,7 +139,7 @@ public class BinaryTreeValidate {
         }
 
         /**
-         * 套路
+         * 套路解决, 深度优先
          */
         public static boolean isBalanced(TreeNode root) {
             return isBalancedFormula(root).isBalanced;
@@ -157,7 +157,7 @@ public class BinaryTreeValidate {
         }
 
         /**
-         * 后序遍历: 递归
+         * 深度优先
          */
         public static boolean isBalancedRecursive(TreeNode root) {
             return isBalancedRecursiveHeight(root) >= 0;
@@ -196,7 +196,7 @@ public class BinaryTreeValidate {
         /**
          * 层序遍历: 迭代实现
          */
-        public static boolean isCompleteTreeLoop(TreeNode root) {
+        public static boolean isCompleteTreeBfs(TreeNode root) {
             boolean isComplete = true;
             Queue<TreeNode> queue = new LinkedList<>();
             if (root != null) {
@@ -225,12 +225,13 @@ public class BinaryTreeValidate {
         }
 
         /**
-         * 套路
+         * 套路解决, 迭代实现
          */
-        public static boolean isCompleteFormula(TreeNode root) {
+        public static boolean isCompleteTree(TreeNode root) {
             int index = 0;
             List<TreeNodeWrapper> list = new ArrayList<>();
             if (root != null) {
+                // 注意: 这里起始 index 必须从 1 开始, 否则计算子节点 index 会有问题
                 list.add(new TreeNodeWrapper(1, root));
             }
             while (index < list.size()) {
@@ -251,25 +252,25 @@ public class BinaryTreeValidate {
     public static class SymmetricBinaryTreeValidate {
 
         /**
-         * 递归实现
+         * 深度优先, 递归实现
          */
-        public static boolean isSymmetricRecursive(TreeNode root) {
-            return isSymmetricRecursive(root.left, root.right);
+        public static boolean isSymmetricRecur(TreeNode root) {
+            return isSymmetricRecur(root.left, root.right);
         }
 
-        public static boolean isSymmetricRecursive(TreeNode left, TreeNode right) {
+        public static boolean isSymmetricRecur(TreeNode left, TreeNode right) {
             if (left == null && right == null) {
                 return true;
             }
             if (left != null && right != null) {
                 return left.value == right.value &&
-                        isSymmetricRecursive(left.left, right.right) && isSymmetricRecursive(left.right, right.left);
+                        isSymmetricRecur(left.left, right.right) && isSymmetricRecur(left.right, right.left);
             }
             return false;
         }
 
         /**
-         * 迭代实现
+         * 层序遍历, 广度优先, 迭代实现
          */
         public static boolean isSymmetricLoop(TreeNode root) {
             TreeNode left = null, right = null;

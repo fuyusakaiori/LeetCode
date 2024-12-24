@@ -10,27 +10,27 @@ import java.util.*;
 public class BinaryTreeRightSideView {
 
     /**
-     * 递归实现: 层序遍历
+     * 深度优先, 递归实现
      */
-    public static List<Integer> rightSideViewDFS(TreeNode root) {
+    public static List<Integer> rightSideViewDfs(TreeNode root) {
         Map<Integer, Integer> views = new HashMap<>();
-        rightSideViewDFS(root, 0, views);
+        rightSideViewDfs(root, 0, views);
         return new ArrayList<>(views.values());
     }
 
-    public static void rightSideViewDFS(TreeNode root, int level, Map<Integer, Integer> views) {
+    public static void rightSideViewDfs(TreeNode root, int level, Map<Integer, Integer> views) {
         if (root == null) {
             return;
         }
         views.putIfAbsent(level, root.value);
-        rightSideViewDFS(root.right, level + 1, views);
-        rightSideViewDFS(root.left, level + 1, views);
+        rightSideViewDfs(root.right, level + 1, views);
+        rightSideViewDfs(root.left, level + 1, views);
     }
 
     /**
-     * 迭代实现: 层序遍历
+     * 广度优先, 迭代实现
      */
-    public static List<Integer> rightSideViewBFS(TreeNode root) {
+    public static List<Integer> rightSideViewBfs(TreeNode root) {
         TreeNode view = null;
         TreeNode currentLevelEnd = root;
         TreeNode nextLevelEnd = null;

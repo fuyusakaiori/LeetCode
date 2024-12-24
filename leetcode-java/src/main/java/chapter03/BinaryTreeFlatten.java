@@ -14,9 +14,9 @@ public class BinaryTreeFlatten {
     private static TreeNode previous = null;
 
     /**
-     * 迭代实现: 前序遍历
+     * 前序遍历, 深度优先, 迭代实现
      */
-    public static void flattenLoop(TreeNode root) {
+    public static void flattenIterate(TreeNode root) {
         List<TreeNode> nodes = new ArrayList<>();
         LinkedList<TreeNode> stack = new LinkedList<>();
         if (root != null) {
@@ -39,11 +39,9 @@ public class BinaryTreeFlatten {
     }
 
     /**
-     * 递归实现:
-     * <p>1. 前序遍历</p>
-     * <p>2. 后序遍历</p>
+     * 前序遍历, 深度优先, 递归实现:
      */
-    public static void flattenRecursive(TreeNode root) {
+    public static void flattenRecur(TreeNode root) {
         if (root == null) {
             return;
         }
@@ -56,8 +54,8 @@ public class BinaryTreeFlatten {
         }
         root.left = null;
         previous = root;
-        flattenRecursive(left);
-        flattenRecursive(right);
+        flattenRecur(left);
+        flattenRecur(right);
     }
 
 
@@ -65,6 +63,21 @@ public class BinaryTreeFlatten {
      * 迭代实现: O(1) 空间复杂度
      */
     public static void flatten(TreeNode root) {
-
+        if (root == null) {
+            return;
+        }
+        TreeNode current = root;
+        while (current != null) {
+            if (current.left != null) {
+                TreeNode previous = current.left;
+                while (previous.right != null) {
+                    previous = previous.right;
+                }
+                previous.right = current.right;
+                current.right = current.left;
+                current.left = null;
+            }
+            current = current.right;
+        }
     }
 }

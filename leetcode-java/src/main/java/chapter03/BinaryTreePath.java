@@ -25,7 +25,7 @@ public class BinaryTreePath {
          * <p>2. 如果在非叶子结点变为 0, 那么到达叶子结点就会为负数, 返回 false</p>
          * <p>3. 如果到达叶子结点恰好为 0, 那么这条路径就是有效的</p>
          */
-        public static boolean hasPathSumDFS(TreeNode root, int target) {
+        public static boolean hasPathSumDfs(TreeNode root, int target) {
             // 注意: 这个判断其实是用来处理空值的
             if (root == null) {
                 return false;
@@ -33,14 +33,14 @@ public class BinaryTreePath {
             if (root.left == null && root.right == null) {
                 return root.value == target;
             }
-            return hasPathSumDFS(root.left, target - root.value) ||
-                    hasPathSumDFS(root.right, target - root.value);
+            return hasPathSumDfs(root.left, target - root.value) ||
+                    hasPathSumDfs(root.right, target - root.value);
         }
 
         /**
          * 路径总和: 广度优先, 迭代实现
          */
-        public static boolean hasPathSumBFS(TreeNode root, int target) {
+        public static boolean hasPathSumBfs(TreeNode root, int target) {
             int sum = 0;
             Queue<Integer> sums = new LinkedList<>();
             Queue<TreeNode> queue = new LinkedList<>();
@@ -75,14 +75,14 @@ public class BinaryTreePath {
         /**
          * 路径总和 II: 递归实现, 深度搜索
          */
-        public static List<List<Integer>> pathSumDFS(TreeNode root, int target) {
+        public static List<List<Integer>> pathSumDfs(TreeNode root, int target) {
             Deque<Integer> path = new LinkedList<>();
             List<List<Integer>> paths = new LinkedList<>();
-            pathSumDFS(root, target, path, paths);
+            pathSumDfs(root, target, path, paths);
             return paths;
         }
 
-        public static void pathSumDFS(TreeNode root, int target, Deque<Integer> path, List<List<Integer>> paths) {
+        public static void pathSumDfs(TreeNode root, int target, Deque<Integer> path, List<List<Integer>> paths) {
             if (root == null) {
                 return;
             }
@@ -91,8 +91,8 @@ public class BinaryTreePath {
             if (root.left == null && root.right == null && target == 0) {
                 paths.add(new ArrayList<>(path));
             }
-            pathSumDFS(root.left, target, path, paths);
-            pathSumDFS(root.right, target, path, paths);
+            pathSumDfs(root.left, target, path, paths);
+            pathSumDfs(root.right, target, path, paths);
             path.pollLast();
         }
 
@@ -105,7 +105,7 @@ public class BinaryTreePath {
          * 5. 前者从逻辑上来说比较直观, 但是效率很差, 因为需要频繁创建链表对象
          * 6. 后者虽然在计算和的时候需要遍历, 但是不需要创建大量的对象
          */
-        private static List<List<Integer>> pathSumBFS(TreeNode root, int target){
+        private static List<List<Integer>> pathSumBfs(TreeNode root, int target){
             Map<TreeNode, TreeNode> map = new HashMap<>();
             List<List<Integer>> paths = new LinkedList<>();
             Queue<TreeNode> queue = new LinkedList<>();
@@ -160,34 +160,37 @@ public class BinaryTreePath {
         /**
          * 路径总和 III: 单递归
          */
-        public static int pathSumSingleDFS(TreeNode root, int target) {
-            return pathSumSingleDFS(root, false, target);
+        public static int pathSumSingleDfs(TreeNode root, int target) {
+            return pathSumSingleDfs(root, false, target);
         }
 
-        public static int pathSumSingleDFS(TreeNode root, boolean flag, long target) {
+        public static int pathSumSingleDfs(TreeNode root, boolean flag, long target) {
             if (root == null) {
                 return 0;
             }
             int paths = 0;
-            if (!flag) {
-                paths += pathSumSingleDFS(root.left, false, target);
-                paths += pathSumSingleDFS(root.right, false, target);
+            if (target == root.value) {
+                paths++;
             }
-            return paths + pathSumSingleDFS(root.left, true, target - root.value)
-                    + pathSumSingleDFS(root.right, true, target - root.value);
+            if (!flag) {
+                paths += pathSumSingleDfs(root.left, false, target);
+                paths += pathSumSingleDfs(root.right, false, target);
+            }
+            return paths + pathSumSingleDfs(root.left, true, target - root.value)
+                    + pathSumSingleDfs(root.right, true, target - root.value);
         }
 
         /**
          * 路径总和 III: 双重递归
          */
-        public static int pathSumDoubleDFS(TreeNode root, int target) {
+        public static int pathSumDoubleDfs(TreeNode root, int target) {
             if (root == null) {
                 return 0;
             }
-            return getPathSumDFS(root, target) + pathSumDoubleDFS(root.left, target) + pathSumDoubleDFS(root.right, target);
+            return getPathSumDfs(root, target) + pathSumDoubleDfs(root.left, target) + pathSumDoubleDfs(root.right, target);
         }
 
-        public static int getPathSumDFS(TreeNode root, int target) {
+        public static int getPathSumDfs(TreeNode root, int target) {
             if (root == null) {
                 return 0;
             }
@@ -195,8 +198,8 @@ public class BinaryTreePath {
             if (root.value == target) {
                 paths += 1;
             }
-            return paths + getPathSumDFS(root.left, target - root.value)
-                    + getPathSumDFS(root.right, target - root.value);
+            return paths + getPathSumDfs(root.left, target - root.value)
+                    + getPathSumDfs(root.right, target - root.value);
         }
 
         /**
@@ -231,7 +234,7 @@ public class BinaryTreePath {
             paths += pathSumPrefix(root.left, current, target, prefix);
             paths += pathSumPrefix(root.right, current, target, prefix);
             // 将前缀和移除
-            prefix.put(current, 0);
+            prefix.put(current, prefix.get(current) - 1);
             return paths;
         }
 
@@ -244,13 +247,13 @@ public class BinaryTreePath {
         /**
          * 前序遍历, 深度优先, 递归实现
          */
-        public static List<String> binaryTreePathsDFS(TreeNode root) {
+        public static List<String> binaryTreePathsDfs(TreeNode root) {
             List<String> paths = new ArrayList<>();
-            binaryTreePathsDFS(root, "", paths);
+            binaryTreePathsDfs(root, "", paths);
             return paths;
         }
 
-        public static void binaryTreePathsDFS(TreeNode root, String path, List<String> paths) {
+        public static void binaryTreePathsDfs(TreeNode root, String path, List<String> paths) {
             if (root == null) {
                 return;
             }
@@ -261,14 +264,14 @@ public class BinaryTreePath {
                 return;
             }
             sb.append("->");
-            binaryTreePathsDFS(root.left, sb.toString(), paths);
-            binaryTreePathsDFS(root.right, sb.toString(), paths);
+            binaryTreePathsDfs(root.left, sb.toString(), paths);
+            binaryTreePathsDfs(root.right, sb.toString(), paths);
         }
 
         /**
          * 层序遍历, 广度优先, 迭代实现
          */
-        public static List<String> binaryTreePathsBFS(TreeNode root) {
+        public static List<String> binaryTreePathsBfs(TreeNode root) {
 
             return null;
         }
@@ -282,13 +285,13 @@ public class BinaryTreePath {
         /**
          * 前序遍历, 深度优先, 递归实现
          */
-        public int sumNumbersDFS(TreeNode root) {
+        public int sumNumbersDfs(TreeNode root) {
             List<String> paths = new ArrayList<>();
-            sumNumbersDFS(root, "", paths);
+            sumNumbersDfs(root, "", paths);
             return paths.stream().mapToInt(Integer::parseInt).sum();
         }
 
-        public void sumNumbersDFS(TreeNode root, String path, List<String> paths) {
+        public void sumNumbersDfs(TreeNode root, String path, List<String> paths) {
             if (root == null) {
                 return;
             }
@@ -297,15 +300,15 @@ public class BinaryTreePath {
             if (root.left == null && root.right == null) {
                 paths.add(sb.toString());
             } else {
-                sumNumbersDFS(root.left, sb.toString(), paths);
-                sumNumbersDFS(root.right, sb.toString(), paths);
+                sumNumbersDfs(root.left, sb.toString(), paths);
+                sumNumbersDfs(root.right, sb.toString(), paths);
             }
         }
 
         /**
          * 层序遍历, 广度优先, 迭代实现
          */
-        public int sumNumbersBFS(TreeNode root) {
+        public int sumNumbersBfs(TreeNode root) {
 
             return 0;
         }
