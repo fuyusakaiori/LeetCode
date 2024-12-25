@@ -3,14 +3,14 @@ package chapter02;
 import utils.ListNode;
 
 /**
- * <h2>旋转链表</h2>
+ * 旋转链表
  */
 public class RotationList {
 
     /**
-     * <h3>思路: </h3>
-     * <h3>1. 利用快慢指针找到需要旋转的部分的头结点, 然后记录头结点, 作为新的头结点</h3>
-     * <h3>2. 然后继续遍历找到的尾结点, 然后将尾结点连接到旧的头结点, 最后返回新的头结点</h3>
+     * <p>思路: </p>
+     * <p>1. 利用快慢指针找到需要旋转的部分的头结点, 然后记录头结点, 作为新的头结点</p>
+     * <p>2. 然后继续遍历找到的尾结点, 然后将尾结点连接到旧的头结点, 最后返回新的头结点</p>
      */
     private static ListNode rotateList(ListNode head, int k){
         if (head == null || head.next == null) {

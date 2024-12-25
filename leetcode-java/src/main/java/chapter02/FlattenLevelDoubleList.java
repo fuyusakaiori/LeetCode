@@ -3,13 +3,13 @@ package chapter02;
 import utils.ListNode;
 
 /**
- * <h2>扁平化多级双向链表</h2>
+ * <p>扁平化多级双向链表</p>
  */
 public class FlattenLevelDoubleList {
 
     /**
-     * <h3>注意事项: </h3>
-     * <h3>递归返回的是尾结点, 但是方法最后应该返回头结点, 所以需要另起方法, 但不需要这个方法的返回值</h3>
+     * <p>注意事项: </p>
+     * <p>递归返回的是尾结点, 但是方法最后应该返回头结点, 所以需要另起方法, 但不需要这个方法的返回值</p>
      */
     public static ListNode flatten(ListNode head) {
         if (head == null) {
@@ -20,7 +20,7 @@ public class FlattenLevelDoubleList {
     }
 
     /**
-     * <h3>思路: </h3>
+     * <p>思路: </p>
      * <p>1. 如果发现某个结点存在子结点, 那么就直接去遍历子结点的链表</p>
      * <p>2. 遍历到子链表的结尾时, 就直接返回尾结点: 注意这里一定是返回尾结点, 不要返回成空节点/p>
      * <p>3. 将子链表的尾结点连接当前的结点的下个结点, 然后将当前结点的下个结点改为自己的子结点</p>

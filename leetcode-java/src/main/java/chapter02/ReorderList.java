@@ -7,10 +7,9 @@ import utils.ListNode;
  */
 public class ReorderList {
 
-
     /**
-     * <h3>思路: 找中点 + 逆序 + 衔接</h3>
-     * <h3>注: 几乎考察了链表常用的几个技巧</h3>
+     * <p>思路: 找中点 + 逆序 + 衔接</p>
+     * <p>注: 几乎考察了链表常用的几个技巧</p>
      */
     private static ListNode reorderList(ListNode head){
         ListNode next = null;

@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * <h2>链表分区</h2>
- * <h3>1. 分隔链表: 分隔成两个部分; 或者分隔成三个部分</h3>
- * <h3>2. 分隔链表: 分隔成指定数量部分</h3>
+ * <p>链表分区</p>
+ * <p>1. 分隔链表: 分隔成两个部分; 或者分隔成三个部分</p>
+ * <p>2. 分隔链表: 分隔成指定数量部分</p>
  */
 public class ListPartition {
 
     /**
-     * <h3>思路: 每个区域都用头尾指针记录, 然后将每个区域串联起来</h3>
+     * <p>思路: 每个区域都用头尾指针记录, 然后将每个区域串联起来</p>
      */
     private static ListNode partition(ListNode head, int target) {
         if (head == null || head.next == null)
@@ -48,7 +48,7 @@ public class ListPartition {
     }
 
     /**
-     * <h3></h3>
+     * <p></p>
      */
     private static ListNode[] splitList(ListNode head, int k){
         if(head == null)

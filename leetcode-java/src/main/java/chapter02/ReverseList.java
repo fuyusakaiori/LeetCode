@@ -3,17 +3,17 @@ package chapter02;
 import utils.ListNode;
 
 /**
- * <h2>反转链表</h2>
- * <h3>1.反转链表</h3>
- * <h3>2.反转链表 II</h3>
- * <h3>3.两两交换链表中的结点</h3>
- * <h3>4.K个一组反转</h3>
+ * <p>反转链表</p>
+ * <p>1.反转链表</p>
+ * <p>2.反转链表 II</p>
+ * <p>3.两两交换链表中的结点</p>
+ * <p>4.K个一组反转</p>
  * <p>万能解法: 集合、数组、栈都是可以完成的</p>
  */
 public class ReverseList {
 
     /**
-     * <h3>思路: 反转链表 迭代</h3>
+     * <p>思路: 反转链表 迭代</p>
      */
     public static ListNode reverseListLoop(ListNode head){
         ListNode previous = null;
@@ -29,7 +29,7 @@ public class ReverseList {
     }
 
     /**
-     * <h3>思路: 反转链表 递归</h3>
+     * <p>思路: 反转链表 递归</p>
      */
     public static ListNode reverseListRecursive(ListNode head){
         if (head == null || head.next == null) {
@@ -42,7 +42,7 @@ public class ReverseList {
     }
 
     /**
-     * <h3>思路: 反转链表 II</h3>
+     * <p>思路: 反转链表 II</p>
      */
     public static ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode dummy = new ListNode(0, head);
@@ -68,7 +68,7 @@ public class ReverseList {
     }
 
     /**
-     * <h3>思路: K个一组反转链表 <=> 两两交换链表中的结点</h3>
+     * <p>思路: K个一组反转链表 <=> 两两交换链表中的结点</p>
      */
     public static ListNode reverseKGroup(ListNode head, int k) {
         ListNode dummy = new ListNode(0 ,head);

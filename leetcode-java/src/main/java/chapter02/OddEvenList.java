@@ -3,13 +3,13 @@ package chapter02;
 import utils.ListNode;
 
 /**
- * <h2>奇偶链表</h2>
+ * <p>奇偶链表</p>
  * <p>问题描述: 让结点编号为奇数的指向奇数, 为偶数的指向偶数</p>
  */
 public class OddEvenList {
 
     /**
-     * <h3>思路: 采用双指针也就是分割链表的解法</h3>
+     * <p>思路: 采用双指针也就是分割链表的解法</p>
      */
     private static ListNode oddEvenListIndex(ListNode head){
         if (head == null || head.next == null) {
@@ -36,7 +36,7 @@ public class OddEvenList {
     }
 
     /**
-     * <h3>思路: 模拟</h3>
+     * <p>思路: 模拟</p>
      */
     public static ListNode oddEvenList(ListNode head){
         if (head == null || head.next == null) {

@@ -5,12 +5,12 @@ import utils.ListNode;
 import java.util.LinkedList;
 
 /**
- * <h2>回文链表</h2>
+ * <p>回文链表</p>
  */
 public class PalindromeList {
 
     /**
-     * <h3>思路: 栈实现</h3>
+     * <p>思路: 栈实现</p>
      */
     public static boolean isPalindromeStack(ListNode head) {
         ListNode current = head;
@@ -30,7 +30,7 @@ public class PalindromeList {
     }
 
     /**
-     * <h3>思路: 栈实现, 优化</h3>
+     * <p>思路: 栈实现, 优化</p>
      */
     public static boolean isPalindromeStackOptimize(ListNode head) {
         boolean flag = false;
@@ -58,9 +58,9 @@ public class PalindromeList {
     }
 
     /**
-     * <h3>思路：</h3>
-     * <h3>1. 快慢指针找到中点, 然后从中点开始逆序直到结尾</h3>
-     * <h3>2. 快指针和慢指针两个分别从头和尾开始遍历, 直到中点</h3>
+     * <p>思路：</p>
+     * <p>1. 快慢指针找到中点, 然后从中点开始逆序直到结尾</p>
+     * <p>2. 快指针和慢指针两个分别从头和尾开始遍历, 直到中点</p>
      */
     public static boolean isPalindrome(ListNode head){
         ListNode fast = head;

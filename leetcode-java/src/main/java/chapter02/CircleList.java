@@ -5,15 +5,15 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * <h2>环形链表</h2>
- * <h3>1. 环形链表</h3>
- * <h3>2. 环形链表 II</h3>
- * <h3>注: 这两个题思路基本没有区别</h3>
+ * <p>环形链表</p>
+ * <p>1. 环形链表</p>
+ * <p>2. 环形链表 II</p>
+ * <p>注: 这两个题思路基本没有区别</p>
  */
 public class CircleList {
 
     /**
-     * <h3>思路: 环形链表 II</h3>
+     * <p>思路: 哈希表</p>
      */
     private static ListNode detectCycleHashSet(ListNode head){
         ListNode current = head;
@@ -28,7 +28,7 @@ public class CircleList {
     }
 
     /**
-     * <h3>思路: 环形链表 II</h3>
+     * <p>思路: 快慢指针</p>
      */
     public static ListNode detectCycle(ListNode head){
         ListNode slow = head;

@@ -6,12 +6,12 @@ import utils.RandomUtil;
 import java.util.*;
 
 /**
- * <h2>排序链表</h2>
+ * <p>排序链表</p>
  */
 public class SortList {
 
     /**
-     * <h3>思路: 调用集合排序的方法</h3>
+     * <p>思路: 调用集合排序的方法</p>
      */
     public static ListNode sortListApi(ListNode head) {
         ListNode current = head;
@@ -32,9 +32,9 @@ public class SortList {
     }
 
     /**
-     * <h3>思路: 自底向上的归并排序</h3>
-     * <h3>1. 最初每个分区仅有一个结点, 然后两两合并成有两个结点的单元, 依次类推</h3>
-     * <h3>2. 每轮合并的次数取决于分区的数量</h3>
+     * <p>思路: 自底向上的归并排序</p>
+     * <p>1. 最初每个分区仅有一个结点, 然后两两合并成有两个结点的单元, 依次类推</p>
+     * <p>2. 每轮合并的次数取决于分区的数量</p>
      */
     public static ListNode sortListMerge(ListNode head) {
         ListNode dummy = new ListNode(0, head);

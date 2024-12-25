@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <h2>复制带随机指针的链表</h2>
+ * <p>复制带随机指针的链表</p>
  */
 public class RandomListCopy {
 
     /**
-     * <h3>思路: 哈希表实现</h3>
+     * <p>思路: 哈希表实现</p>
      */
     public static ListNode copyComplexListHash(ListNode head) {
         ListNode current = head;
@@ -30,7 +30,7 @@ public class RandomListCopy {
     }
 
     /**
-     * <h3>思路: 原链表中插入克隆结点, 复制完成后分离</h3>
+     * <p>思路: 原链表中插入克隆结点, 复制完成后分离</p>
      */
     public static ListNode copyComplexList(ListNode head) {
         ListNode current = head;

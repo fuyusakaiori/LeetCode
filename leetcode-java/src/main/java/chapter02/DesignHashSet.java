@@ -1,16 +1,16 @@
 package chapter02;
 
 /**
- * <h2>设计哈希集合</h2>
- * <h3>1. 数组实现</h3>
- * <h3>2. 链表实现</h3>
- * <h3>3. BitMap 实现</h3>
- * <h3>注: 位图可以使用更小的空间存储大量的数, 这里假设存储的最大值为 10^6</h3>
+ * <p>设计哈希集合</p>
+ * <p>1. 数组实现</p>
+ * <p>2. 链表实现</p>
+ * <p>3. BitMap 实现</p>
+ * <p>注: 位图可以使用更小的空间存储大量的数, 这里假设存储的最大值为 10^6</p>
  */
-public class DesignHashSet
-{
+public class DesignHashSet {
+
     /**
-     * <h3>数组实现</h3>
+     * <p>数组实现</p>
      */
     private static class ArraySet{
         // 注: 必须比这个值大
@@ -30,7 +30,7 @@ public class DesignHashSet
     }
 
     /**
-     * <h3>链表实现</h3>
+     * <p>链表实现</p>
      */
     private static class LinkedListSet{
         // 注: 根据需要自行设定
@@ -83,7 +83,7 @@ public class DesignHashSet
     }
 
     /**
-     * <h3>位图实现</h3>
+     * <p>位图实现</p>
      */
     private static class BitMapSet{
         // 注: 可以比这个值小

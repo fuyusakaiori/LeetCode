@@ -3,7 +3,7 @@ package chapter02;
 import utils.ListNode;
 
 /**
- * <h2>合并链表</h2>
+ * <p>合并链表</p>
  * <p>1. 合并两个有序链表</p>
  * <p>2. 合并两个普通的链表</p>
  * <p>3. 合并 K 个升序链表</p>
@@ -11,7 +11,7 @@ import utils.ListNode;
 public class MergeList {
 
     /**
-     * <h3>思路: 哑元 + 比大小</h3>
+     * <p>思路: 哑元 + 比大小</p>
      */
     public static ListNode mergeTwoSortedLists(ListNode list1, ListNode list2){
         ListNode dummy = new ListNode(0);
@@ -36,7 +36,7 @@ public class MergeList {
     }
 
     /**
-     * <h3>思路: 找到合并链表的起始位置和终止位置就行</h3>
+     * <p>思路: 找到合并链表的起始位置和终止位置就行</p>
      */
     public static ListNode mergeBetweenLists(ListNode list1, ListNode list2, int left, int right){
         ListNode dummy = new ListNode(0, list1);
@@ -60,7 +60,7 @@ public class MergeList {
     }
 
     /**
-     * <h3> 思路: 合并 K 个有序链表</h3>
+     * <p> 思路: 合并 K 个有序链表</p>
      */
     public static ListNode mergeKLists(ListNode[] lists){
         if (lists.length == 0) {

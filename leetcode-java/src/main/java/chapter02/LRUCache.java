@@ -4,18 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <h2>设计 LRU 缓存</h2>
- * <h3>设计思路；</h3>
- * <h3>1. 满足查询时间为 O(1) => 使用哈希表完成</h3>
- * <h3>2. 满足最近最少使用 => 用链表维护结点的插入顺序, 并根据使用频率调整结点的顺序</h3>
- * <h3>3. 头结点作为最不常使用的结点, 尾结点作为最常使用的结点</h3>
- * <h3>4. 每次插入的新结点都是最常使用的, 每次移除结点都是最不常使用的</h3>
+ * <p>设计 LRU 缓存</p>
+ * <p>设计思路；</p>
+ * <p>1. 满足查询时间为 O(1) => 使用哈希表完成</p>
+ * <p>2. 满足最近最少使用 => 用链表维护结点的插入顺序, 并根据使用频率调整结点的顺序</p>
+ * <p>3. 头结点作为最不常使用的结点, 尾结点作为最常使用的结点</p>
+ * <p>4. 每次插入的新结点都是最常使用的, 每次移除结点都是最不常使用的</p>
  */
 public class LRUCache<K, V> {
 
     /**
-     * <h3>双向链表结点</h3>
-     * <h3>注: 记录 {@code key} 的目的是为了之后移除 {@code cache} 中的 {@code key}</h3>
+     * <p>双向链表结点</p>
+     * <p>注: 记录 {@code key} 的目的是为了之后移除 {@code cache} 中的 {@code key}</p>
      * @param <K> key
      * @param <V> value
      */
@@ -35,7 +35,7 @@ public class LRUCache<K, V> {
         private Node<K, V> tail;
 
         /**
-         * <h3>向双向链表中添加结点</h3>
+         * <p>向双向链表中添加结点</p>
          */
         private void add(Node<K, V> node){
             if (node == null) return;
@@ -49,7 +49,7 @@ public class LRUCache<K, V> {
         }
 
         /**
-         * <h3>淘汰旧的结点</h3>
+         * <p>淘汰旧的结点</p>
          */
         private Node<K, V> remove(){
             if (this.head == null) return null;
@@ -68,7 +68,7 @@ public class LRUCache<K, V> {
         }
 
         /**
-         * <h3>更新结点</h3>
+         * <p>更新结点</p>
          */
         private void move(Node<K, V> node){
             if (node == null || node == this.tail) return;

@@ -5,15 +5,15 @@ import utils.ListNode;
 import java.util.*;
 
 /**
- * <h2>链表相交</h2>
- * <h3>1. 相交链表: 链表中没有环, 判断是否相交</h3>
- * <h3>2. 相交链表 II: 链表存在环, 判断是否相交</h3>
+ * <p>链表相交</p>
+ * <p>1. 相交链表: 链表中没有环, 判断是否相交</p>
+ * <p>2. 相交链表 II: 链表存在环, 判断是否相交</p>
  */
 public class IntersectionList {
 
 
     /**
-     * <h3>思路: 哈希表</h3>
+     * <p>思路: 哈希表</p>
      */
     private static ListNode getIntersectionNodeHash(ListNode first, ListNode second){
         Set<ListNode> set = new HashSet<>();
@@ -31,7 +31,7 @@ public class IntersectionList {
     }
 
     /**
-     * <h3>思路: 先计算两个链表的长度, 然后让长的链表先走差值, 最后一起开始移动</h3>
+     * <p>思路: 先计算两个链表的长度, 然后让长的链表先走差值, 最后一起开始移动</p>
      */
     private static ListNode getIntersectionNode(ListNode first, ListNode second){
         int firstLength = getLength(first);
@@ -63,10 +63,10 @@ public class IntersectionList {
     }
 
     /**
-     * <h3>1. 两个链表都具有环, 但是不相交</h3>
-     * <h3>2. 两个链表都有环, 且在入环之前相交</h3>
-     * <h3>3. 两个链表都有环, 在入环之后相交</h3>
-     * <h3>注: 不存在一个链表有环, 另外一个链表没环, 两个链表还相交的情况</h3>
+     * <p>1. 两个链表都具有环, 但是不相交</p>
+     * <p>2. 两个链表都有环, 且在入环之前相交</p>
+     * <p>3. 两个链表都有环, 在入环之后相交</p>
+     * <p>注: 不存在一个链表有环, 另外一个链表没环, 两个链表还相交的情况</p>
      */
     private static ListNode getIntersectionNodeLoop(ListNode l1, ListNode l2) {
         // 1. 如果没有环, 那么就调用刚才的方法去执行
