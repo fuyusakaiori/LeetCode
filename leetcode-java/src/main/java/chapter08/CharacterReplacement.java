@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 /**
  * <h3>替换后最长重复字符</h3>

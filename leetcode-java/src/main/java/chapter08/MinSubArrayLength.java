@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 /**
  * <h3>最小长度子数组</h3>

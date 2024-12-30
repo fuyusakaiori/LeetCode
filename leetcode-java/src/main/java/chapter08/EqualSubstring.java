@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 /**
  * <h3>尽可能使字符串相等</h3>

@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 /**
  * <h3>最大连续 1 的个数</h3>

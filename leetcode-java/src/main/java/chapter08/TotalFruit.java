@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 import java.util.HashMap;
 import java.util.Map;

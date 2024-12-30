@@ -1,4 +1,4 @@
-package chapter05.windows;
+package chapter08;
 
 /**
  * <h3>可获得的最大点数</h3>
