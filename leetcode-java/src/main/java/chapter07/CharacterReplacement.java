@@ -1,4 +1,4 @@
-package chapter08;
+package chapter07;
 
 /**
  * <h3>替换后最长重复字符</h3>

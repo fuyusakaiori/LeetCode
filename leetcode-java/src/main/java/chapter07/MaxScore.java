@@ -1,4 +1,4 @@
-package chapter08;
+package chapter07;
 
 /**
  * <h3>可获得的最大点数</h3>

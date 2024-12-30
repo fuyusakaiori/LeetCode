@@ -1,4 +1,4 @@
-package chapter08;
+package chapter07;
 
 /**
  * <h3>最大连续 1 的个数</h3>

@@ -1,4 +1,4 @@
-package chapter08;
+package chapter07;
 
 /**
  * <h3>尽可能使字符串相等</h3>

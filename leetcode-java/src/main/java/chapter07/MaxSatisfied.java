@@ -1,4 +1,4 @@
-package chapter08;
+package chapter07;
 
 /**
  * <h3>爱生气的书店老板</h3>
