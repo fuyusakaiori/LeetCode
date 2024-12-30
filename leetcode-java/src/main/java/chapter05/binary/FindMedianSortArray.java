@@ -1,10 +1,9 @@
 package chapter05.binary;
 
 /**
- * <h2>寻找正序数组中位数</h2>
- * <h3>补充题: 寻找两个有序数组中的第 K 小的数</h3>
+ * <p>寻找两个正序数组中位数</p>
  */
-public class FindMedianSortedArray {
+public class FindMedianSortArray {
 
     /**
      * <h3>最简单难的做法: 合并数组</h3>
@@ -84,7 +83,5 @@ public class FindMedianSortedArray {
             return findKSortedArray(nums1, s1, e1, nums2, second + 1, e2, k - (second + 1 - s2));
         return findKSortedArray(nums1, first + 1, e1, nums2, s2, e2, k - (first + 1 - s1));
     }
-
-
 
 }
