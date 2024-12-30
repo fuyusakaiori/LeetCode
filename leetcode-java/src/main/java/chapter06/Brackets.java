@@ -1,4 +1,4 @@
-package chapter07;
+package chapter06;
 
 import java.util.HashMap;
 import java.util.LinkedList;

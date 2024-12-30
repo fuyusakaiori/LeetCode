@@ -1,4 +1,4 @@
-package chapter07;
+package chapter06;
 
 /**
  * <h2>字符串匹配问题</h2>

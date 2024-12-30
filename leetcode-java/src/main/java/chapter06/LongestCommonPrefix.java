@@ -1,4 +1,4 @@
-package chapter07;
+package chapter06;
 
 /**
  * <h2>最长公共前缀</h2>

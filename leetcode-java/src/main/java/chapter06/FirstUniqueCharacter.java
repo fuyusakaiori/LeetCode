@@ -1,4 +1,4 @@
-package chapter07;
+package chapter06;
 
 /**
  * <h2>字符串中第一个唯一字符</h2>

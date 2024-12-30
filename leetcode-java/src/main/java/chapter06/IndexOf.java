@@ -1,4 +1,4 @@
-package chapter07;
+package chapter06;
 
 /**
  * <h2>实现 strStr / indexOf 函数</h2>
