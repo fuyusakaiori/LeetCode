@@ -8,7 +8,7 @@ import java.util.*;
  * <h3>2. 前 K 个高频元素</h3>
  * <h3>3. 大数据情况下的 Top K 问题</h3>
  */
-public class TopKFrequent {
+public class TopK {
 
 
     /**
