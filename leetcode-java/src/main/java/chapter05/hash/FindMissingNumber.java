@@ -21,7 +21,7 @@ public class FindMissingNumber {
             // NOTE: 取模的目的是还原之前的数字大小
             int current = nums[index] % mark;
             // NOTE: 因为会有恰好和数组长度大小相同的元素, 所以需要判断
-            if (current < nums.length && nums[current] < mark) {
+            if (current < nums.length) {
                 nums[current] += mark;
             }
         }

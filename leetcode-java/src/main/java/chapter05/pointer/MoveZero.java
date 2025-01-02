@@ -14,10 +14,15 @@ public class MoveZero {
         int current = 0;
         for (int index = 0; index < numbers.length; index++) {
             if (numbers[index] != 0) {
-                numbers[current++] = numbers[index];
+                swap(numbers, current++, index);
             }
         }
-        Arrays.fill(numbers, current, numbers.length, 0);
+    }
+
+    private static void swap(int[] numbers, int first, int second) {
+        int temp = numbers[first];
+        numbers[first] = numbers[second];
+        numbers[second] = temp;
     }
 
 }

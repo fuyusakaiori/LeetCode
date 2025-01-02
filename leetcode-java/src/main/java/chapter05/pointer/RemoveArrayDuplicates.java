@@ -18,15 +18,13 @@ public class RemoveArrayDuplicates {
          * <p>双指针</p>
          */
         public static int removeDuplicates(int[] nums) {
-            int count = 0;
             int current = 0;
             for (int index = 0; index < nums.length; index++) {
                 if (index == 0 || nums[index] != nums[index - 1]) {
-                    count++;
                     nums[current++] = nums[index];
                 }
             }
-            return count;
+            return current;
         }
 
     }
@@ -39,8 +37,7 @@ public class RemoveArrayDuplicates {
         /**
          * <p>双指针: 自行实现</p>
          */
-        public static int removeDuplicatesSelf(int[] nums) {
-            int count = 0;
+        public static int removeDuplicates(int[] nums) {
             int current = 0;
             int frequency = 1;
             for (int index = 0; index < nums.length; index++) {
@@ -48,19 +45,17 @@ public class RemoveArrayDuplicates {
                     if (index > 0 && nums[index] != nums[index - 1]) {
                         frequency = 0;
                     }
-                    count++;
                     nums[current++] = nums[index];
                 }
                 frequency++;
             }
-            return count;
+            return current;
         }
 
         /**
          * <p>思路: 删除数组中的重复元素 II</p>
-         * <p>注: 这个解法其实有点不好想, 也不是那么好理解, 建议多看几次</p>
          */
-        private static int removeDuplicates(int[] nums, int k){
+        private static int removeDuplicatesGeneral(int[] nums, int k){
             int cur = 0;
             for (int index = 0;index < nums.length;index++){
                 // 注: 因为每个元素仅允许出现 k 次, 所以只需要将比较大小为 k 的区间的左右边界是否相等
@@ -81,7 +76,7 @@ public class RemoveArrayDuplicates {
         /**
          * <p>双指针</p>
          */
-        public int removeElement(int[] nums, int value) {
+        public static int removeElement(int[] nums, int value) {
             int current = 0;
             for (int index = 0; index < nums.length; index++) {
                 if (nums[index] != value) {
@@ -91,30 +86,21 @@ public class RemoveArrayDuplicates {
             return current;
         }
 
-    }
-
-    /**
-     * <p>1. 第二种解法可以采用快排分区的思想</p>
-     * <p>2. 将大于目标次数的放在左边, 将小于目标次数的放在右边</p>
-     */
-    private static int removeDuplicates(int k, int[] nums){
-        int count = 1;
-        int leftIndex = 0, currentIndex = 1;
-        int previous = nums[0];
-        while (currentIndex < nums.length){
-            int current = nums[currentIndex];
-            if (current != previous){
-                nums[++leftIndex] = nums[currentIndex++];
-                previous = current;
-                count = 1;
-            }else if (count < 2){
-                nums[++leftIndex] = nums[currentIndex++];
-                count++;
-            }else{
-                currentIndex++;
+        /**
+         * <p>双指针: 优化</p>
+         */
+        public static int removeElementOptimize(int[] nums, int value) {
+            int left = 0, right = nums.length - 1;
+            while (left <= right) {
+                if (nums[left] == value) {
+                    nums[left] = nums[right];
+                    right--;
+                } else {
+                    left++;
+                }
             }
+            return left;
         }
 
-        return leftIndex + 1;
     }
 }

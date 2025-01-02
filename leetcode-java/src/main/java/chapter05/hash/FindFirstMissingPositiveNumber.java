@@ -41,7 +41,7 @@ public class FindFirstMissingPositiveNumber {
         // NOTE: 开始将元素放回到对应的位置
         for (int index = 0; index < nums.length; index++) {
             // NOTE: 不停交换直到元素回到自己正确的位置上
-            while (nums[index] - 1 < nums.length && nums[index] != nums[nums[index] - 1]) {
+            while (nums[index] < nums.length && nums[index] != nums[nums[index] - 1]) {
                 swap(nums, index, nums[index] - 1);
             }
         }

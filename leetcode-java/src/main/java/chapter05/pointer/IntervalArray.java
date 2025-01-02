@@ -136,8 +136,8 @@ public class IntervalArray {
             int[] interval = new int[2];
             Arrays.sort(intervals, (first, second) -> first[0] - second[0]);
             for (int index = 0; index < intervals.length; index++) {
-                // NOTE: 区间的左边界是一定有序的, 只需要看区间的右边界大小
-                if (index == 0 || interval[1] < intervals[index][1]) {
+                // NOTE: 不能省略判断条件
+                if (index == 0 || (interval[0] < intervals[index][0] && interval[1] < intervals[index][1])) {
                     // NOTE: 如果两个区间存在不相交的位置, 那么就可以直接更新边界区间
                     // NOTE: 因为如果后面的区间能被之前的区间覆盖, 那么是一定可以被边界区间覆盖
                     count++;

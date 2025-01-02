@@ -55,12 +55,12 @@ public class SearchRotateSortArray {
          * <p>二分查找: 和搜索旋转排序数组完全一致, 重复的元素其实可以不用管</p>
          * <p>注意: 如果所有元素都相等, 那么就会退化为线性遍历, 时间复杂度为 O(n)</p>
          */
-        public static int search(int[] nums, int target) {
+        public static boolean search(int[] nums, int target) {
             int left = 0, right = nums.length - 1;
             while (left <= right) {
                 int mid = left + ((right - left) >> 1);
                 if (nums[mid] == target) {
-                    return mid;
+                    return true;
                 }
                 // NOTE: 如果左右两侧边界都相同, 那么可以将两侧的边界去掉, 不过不去掉貌似也没问题
                 if (nums[left] == nums[mid] && nums[mid] == nums[right]) {
@@ -83,7 +83,7 @@ public class SearchRotateSortArray {
                     }
                 }
             }
-            return -1;
+            return false;
         }
 
     }
@@ -152,13 +152,12 @@ public class SearchRotateSortArray {
             while (left <= right) {
                 int mid = left + ((right - left) >> 1);
                 min = Math.min(min, nums[mid]);
-                if (nums[left] == nums[mid] && nums[mid] == nums[right]) {
-                    left++;
-                    right--;
-                } else if (nums[mid] < nums[nums.length - 1]) {
+                if (nums[mid] < nums[right]) {
                     right = mid - 1;
-                } else {
+                } else if (nums[mid] > nums[right]) {
                     left = mid + 1;
+                } else {
+                    right--;
                 }
             }
             return min;
