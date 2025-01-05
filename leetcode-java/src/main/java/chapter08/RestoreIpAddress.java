@@ -1,56 +1,54 @@
 package chapter08;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <h2>复原 IP 地址</h2>
+ * <p>复原 IP 地址</p>
  */
 public class RestoreIpAddress {
 
-    private static final int DEFAULT_SEGLENGTH = 3;
-    private static final int MIM_SEGLENGTH = 1;
-
-    private static final int SEGMENT_COUNT = 4;
-
-    private static List<String> restoreIpAddresses(String source){
-        List<String> ips = new LinkedList<>();
-        dfs(0, 0, source, new StringBuilder(), ips);
+    /**
+     * <p>回溯</p>
+     * <p>1. 虽然思路非常直观, 但是有不少的边界条件需要处理</p>
+     * <p>因为需要对字符串进行截取, 所以要考虑索引是否越界</p>
+     * <p>因为分段不能有前导 0, 所以需要单独处理前导 0 的情况</p>
+     * <P>因为分段必须是有效的, 所以还需要判断分段是否在合法范围内</P>
+     * <p>2. 虽然理论上不采用内部循环也是可以实现的, 但是实际实现起来感觉非常费劲,</p>
+     */
+    public static List<String> restoreIpAddressesTest(String source) {
+        List<String> segments = new ArrayList<>();
+        List<String> ips = new ArrayList<>();
+        restoreIpAddresses(0, source, segments, ips);
         return ips;
     }
 
-    private static void dfs(int start, int count, String source, StringBuilder ip, List<String> ips){
-        // 注: 如果已经有三段了, 那么最后一段只能够是剩下的全部
-        if (count == SEGMENT_COUNT - 1 && start != source.length()){
-            if (source.length() - start > 3)
-                return;
-            String substring = source.substring(start);
-            if (substring.length() > 1 && substring.charAt(0) == '0')
-                return;
-            int segment = Integer.parseInt(substring);
-            if (segment >= 0 && segment <= 255)
-                ips.add(ip.toString() + substring);
+    public static void restoreIpAddresses(int start, String source, List<String> segments, List<String> ips) {
+        if (segments.size() == 4) {
+            // NOTE: 因为字符串的所有字符都需要被使用, 所以还需要确保指针已经移动到末尾
+            if (start == source.length()) {
+                ips.add(String.join(".", segments));
+            }
             return;
         }
-        // 注: 如果在没有三段之前就已经走到末尾, 那么就直接返回
-        if (start == source.length())
+        if (start == source.length()) {
             return;
-        // 1. 确定每段的长度, 默认长度肯定是 3
-        int segLength = DEFAULT_SEGLENGTH;
-        // 2. 如果剩余的长度不足, 那么就需要取小的那个
-        segLength = Math.min(source.length() - start, segLength);
-        // 3. 如果有前导零, 那么分段的长度只能是 1
-        segLength = source.charAt(start) == '0' ? MIM_SEGLENGTH: segLength;
-        // 4. 开始分段处理
-        for (int index = start;index < start + segLength;index++){
-            String substring = source.substring(start, index + 1);
-            int segment = Integer.parseInt(substring);
-            if (segment >= 0 && segment <= 255){
-                ip.append(segment).append(".");
-                dfs(index + 1, count + 1, source, ip, ips);
-                // 注: 记得删除
-                ip.delete(ip.length() - substring.length() - 1, ip.length());
+        }
+        // NOTE: 默认分段长度最多为 3; 如果字符串剩余长度不满足要求, 那么就只能以剩余长度作为截取长度
+        int segmentLength = Math.min(3, source.length() - start);
+        // NOTE: 如果存在前导 0, 那么分段长度只能是 1
+        segmentLength = source.charAt(start) == '0' ? 1 : segmentLength;
+        // NOTE: 开始遍历截取字符串
+        for (int index = start; index < segmentLength; index++) {
+            String segment = source.substring(start, index + 1);
+            // NOTE: 判断分段是否有效
+            if (Integer.parseInt(segment) > 255) {
+                continue;
             }
+            segments.add(segment);
+            restoreIpAddresses(index + 1, source, segments, ips);
+            segments.remove(segments.size() - 1);
         }
     }
 

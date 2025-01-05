@@ -1,140 +1,291 @@
 package chapter08;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <h2>组合总和问题</h2>
- * <h3>1. 组合总和</h3>
- * <h3>2. 组合总和 II</h3>
- * <h3>3. 组合总和 III</h3>
- * <h3>4. 组合总和 IV</h3>
- * <h3>5. 组合</h3>
+ * <p>1. 组合总和</p>
+ * <p>2. 组合总和 II</p>
+ * <p>3. 组合总和 III</p>
+ * <p>4. 组合总和 IV</p>
+ * <p>5. 组合</p>
  */
 public class CombinationSum {
 
     /**
-     * <h3>思路: 组合总和</h3>
-     * <h3>1. 回溯算法</h3>
-     * <h3>2. 背包问题解法</h3>
-     * <h3>注: 这两种方式本质都是回溯算法, 但是两者的思路有所区别</h3>
+     * <p>组合总和: 无重复元素, 可以重复选择, 不允许组合重复</p>
+     * <p>如果没有重复元素, 那么只要不是全排列, 那么必然不可能存在重复的组合</p>
      */
-    private static List<List<Integer>> combinationSum(int[] candidates, int target){
-        List<Integer> combine = new LinkedList<>();
-        List<List<Integer>> combines = new LinkedList<>();
-        dfs(candidates, target, 0, combine, combines);
-        return combines;
-    }
+    public static class CombinationSumI {
 
-    private static void dfs(int[] candidates, int target, int index, List<Integer> combine, List<List<Integer>> combines){
-        if (target == 0){
-            combines.add(new LinkedList<>(combine));
-            return;
+        /**
+         * <p>回溯: 第一种写法, 不使用循环</p>
+         */
+        public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combinationSum(0, target, candidates, combination, combinations);
+            return combinations;
         }
-        if (index == candidates.length || target < 0)
-            return;
-        // 1. 不选择当前这个数
-        dfs(candidates, target, index + 1, combine, combines);
-        // 2. 继续选择当前这个数
-        combine.add(candidates[index]);
-        dfs(candidates, target - candidates[index], index, combine, combines);
-        combine.add(combine.size() - 1);
+        
+        public static void combinationSum(int index, int target, int[] candidates, List<Integer> combination, List<List<Integer>> combinations) {
+            // NOTE: 符合条件的终止条件最好放在最前面, 可能会有在数组末尾满足条件的情况
+            if (target == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (index >= candidates.length || target < 0) {
+                return;
+            }
+            combinationSum(index + 1, target, candidates, combination, combinations);
+            combination.add(candidates[index]);
+            combinationSum(index , target - candidates[index], candidates, combination, combinations);
+            combination.remove(combination.size() - 1);
+        }
+
+        /**
+         * <p>回溯: 第二种写法, 使用循环</p>
+         */
+        public static List<List<Integer>> combinationSumInnerLoop(int[] candidates, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combinationSumInnerLoop(0, target, candidates, combination, combinations);
+            return combinations;
+        }
+
+        public static void combinationSumInnerLoop(int start, int target, int[] candidates, List<Integer> combination, List<List<Integer>> combinations) {
+            if (target == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (start >= candidates.length || target < 0) {
+                return;
+            }
+            // NOTE: 循环的目的就是模拟不选择某个数字的情况 <=> dfs(index + 1, target, candidates, combination, combinations)
+            for (int index = start; index < candidates.length; index++) {
+                combination.add(candidates[index]);
+                // NOTE: 因为可以重复选择, 所以指针不能向前移动
+                combinationSumInnerLoop(index, target - candidates[index], candidates, combination, combinations);
+                combination.remove(combination.size() - 1);
+            }
+        }
+
     }
 
     /**
-     * <h3>思路: 组合总和 II</h3>
+     * <p>组合总和 II: 有重复元素, 不可以重复选择, 不允许组合重复</p>
      */
-    private static List<List<Integer>> combinationSum(int target, int[] candidates){
-        List<Integer> combine = new LinkedList<>();
-        List<List<Integer>> combines = new LinkedList<>();
-        dfs(0, target, false, candidates, combine, combines);
-        return combines;
-    }
+    public static class CombinationSumII {
 
-    private static void dfs(int index, int target, boolean choose, int[] candidates, List<Integer> combine, List<List<Integer>> combines){
-        if (target == 0){
-            combines.add(new LinkedList<>(combine));
-            return;
+        /**
+         * <p>回溯: 第一种写法, 不使用循环</p>
+         */
+        public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            // NOTE: 如果需要去重, 那么不使用额外空间最好的做法就是排序, 然后比较前后两个值
+            Arrays.sort(candidates);
+            combinationSum(0, target, false, candidates, combination, combinations);
+            return combinations;
         }
-        if (index == candidates.length || target < 0)
-            return;
-        if (!choose && index > 0 && candidates[index] == candidates[index - 1])
-            return;
-        dfs(index + 1, target, false, candidates, combine, combines);
-        combine.add(candidates[index]);
-        dfs(index + 1, target - candidates[index], true, candidates, combine, combines);
-        combine.remove(combine.size() - 1);
+
+        public static void combinationSum(int index, int target, boolean flag, int[] candidates, List<Integer> combination, List<List<Integer>> combinations) {
+            if (target == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (index >= candidates.length || target < 0) {
+                return;
+            }
+            combinationSum(index + 1, target, false, candidates, combination, combinations);
+            // NOTE: 在选择数字之前, 需要判断前后数字是否相同; 如果还没有开始选择数字, 那么只要前后数字相同的话, 就不需要选择这个数字, 因为会和前一个重复
+            if (!flag && index > 0 && candidates[index] == candidates[index - 1]) {
+                return;
+            }
+            combinationSum(index + 1, target - candidates[index], true, candidates, combination, combinations);
+        }
+
+        /**
+         * <p>回溯: 第二种写法</p>
+         */
+        public static List<List<Integer>> combinationSumInnerLoop(int[] candidates, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            // NOTE: 如果需要去重, 那么不使用额外空间最好的做法就是排序, 然后比较前后两个值
+            Arrays.sort(candidates);
+            combinationSumInnerLoop(0, target, candidates, combination, combinations);
+            return combinations;
+        }
+
+        public static void combinationSumInnerLoop(int start, int target, int[] candidates, List<Integer> combination, List<List<Integer>> combinations) {
+            if (target == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (start >= candidates.length || target < 0) {
+                return;
+            }
+            for (int index = start; index < candidates.length; index++) {
+                // NOTE: 去除可能重复选择的组合
+                if (index > start && candidates[index] == candidates[index - 1]) {
+                    continue;
+                }
+                combination.add(candidates[index]);
+                combinationSumInnerLoop(index + 1, target - candidates[index], candidates, combination, combinations);
+                combination.remove(combination.size() - 1);
+            }
+        }
+
     }
 
     /**
-     * <h3>思路: 组合总和 III</h3>
+     * <p>组合总和 III: 无重复元素, 不可以重复选择, 不允许组合重复</p>
      */
-    private static List<List<Integer>> combinationSum(int k, int n){
-        List<Integer> combine = new LinkedList<>();
-        List<List<Integer>> combines = new LinkedList<>();
-        dfs(9, n, k, combine, combines);
-        return combines;
-    }
+    public static class CombinationSumIII {
 
-    private static void dfs(int number, int target, int count, List<Integer> combine, List<List<Integer>> combines){
-        if (target == 0){
-            if (count == 0)
-                combines.add(new LinkedList<>(combine));
-            return;
+        /**
+         * <p>回溯: 第一种写法, 不使用循环</p>
+         */
+        public static List<List<Integer>> combinationSum(int count, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combinationSum(1, count, target, combination, combinations);
+            return combinations;
         }
-        if (number == 0 || target < 0)
-            return;
-        dfs(number - 1, target, count, combine, combines);
-        combine.add(number);
-        dfs(number - 1, target - number, count - 1, combine, combines);
-        combine.remove(combine.size() - 1);
+
+        public static void combinationSum(int value, int count, int target, List<Integer> combination, List<List<Integer>> combinations) {
+            if (target == 0 && count == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            // NOTE: 哪些条件下需要终止
+            if (value > 9 || count < 0 || target < 0) {
+                return;
+            }
+            combinationSum(value + 1, count, target, combination, combinations);
+            combination.add(value);
+            combinationSum(value + 1, count - 1, target - value, combination, combinations);
+            combination.remove(combination.size() - 1);
+        }
+
+        /**
+         * <p>回溯: 第二种写法, 使用循环</p>
+         */
+        public static List<List<Integer>> combinationSumInnerLoop(int count, int target) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combinationSumInnerLoop(1, count, target, combination, combinations);
+            return combinations;
+        }
+
+        public static void combinationSumInnerLoop(int start, int count, int target, List<Integer> combination, List<List<Integer>> combinations) {
+            if (target == 0 && count == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (start > 9 || count < 0 || target < 0) {
+                return;
+            }
+            // NOTE: 循环的目的就是模拟不选择某个数字的情况 <=> dfs(index + 1, target, candidates, combination, combinations)
+            for (int value = start; value <= 9; value++) {
+                combination.add(value);
+                // NOTE: 因为不可以重复选择, 所以指针向前移动
+                combinationSumInnerLoop(value + 1, count - 1, target - value, combination, combinations);
+                combination.remove(combination.size() - 1);
+            }
+        }
+
     }
 
     /**
-     * <h3>思路: 组合总和 IV</h3>
+     * <p>组合总和 IV: 无重复元素, 可以重复选择, 允许组合重复</p>
      */
-    private static int combinationCount(int[] nums, int target){
-        int[] dp = new int[target + 1];
-        return dfs(nums, target, dp);
-    }
+    public static class CombinationSumIV {
 
-    private static int dfs(int[] nums, int target, int[] dp){
-        if (target == 0)
-            return 1;
-        if (target < 0)
-            return 0;
-        if (dp[target] != Integer.MIN_VALUE)
-            return dp[target];
-        int count = 0;
-        for (int num : nums) {
-            count += dfs(nums, target - num, dp);
+        /**
+         * <p>回溯: 记忆化搜索</p>
+         * <p>因为需要重新回过头选择之前的元素, 所以只能使用循环的方式处理</p>
+         */
+        public static int combinationSum(int target, int[] nums) {
+            Integer[] dp = new Integer[target + 1];
+            return combinationSum(target, nums, dp);
         }
-        return dp[target] = count;
+
+        public static int combinationSum(int target, int[] nums, Integer[] dp) {
+            if (target == 0) {
+                return 1;
+            }
+            if (target < 0) {
+                return 0;
+            }
+            if (dp[target] != null) {
+                return dp[target];
+            }
+            int count = 0;
+            for (int index = 0; index < nums.length; index++) {
+                count += combinationSum(target - nums[index], nums, dp);
+            }
+            dp[target] = count;
+            return count;
+        }
+
     }
 
     /**
-     * <h3>思路: 组合</h3>
+     * <p>组合: 无重复元素, 不可以重复选择, 不允许组合重复</p>
      */
-    public List<List<Integer>> combine(int n, int k) {
-        List<Integer> c = new LinkedList<>();
-        List<List<Integer>> cs = new LinkedList<>();
-        dfs(n, k, c, cs);
-        return cs;
-    }
+    public static class Combination {
 
-    public void dfs(int n, int k, List<Integer> c, List<List<Integer>> cs){
-        if(n < k)
-            return;
-        if(k == 0){
-            cs.add(new LinkedList<>(c));
-            return;
+        /**
+         * <p>回溯: 第一种写法, 不使用循环</p>
+         */
+        public static List<List<Integer>> combine(int number, int count) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combine(number, count, combination, combinations);
+            return combinations;
         }
-        if(n == 0)
-            return;
-        dfs(n - 1, k, c, cs);
-        c.add(n);
-        dfs(n - 1, k - 1, c, cs);
-        c.remove(c.size() - 1);
+
+        public static void combine(int number, int count, List<Integer> combination, List<List<Integer>> combinations) {
+            if (count == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (number == 0) {
+                return;
+            }
+            combine(number - 1, count, combination, combinations);
+            combination.add(number);
+            combine(number - 1, count - 1, combination, combinations);
+            combination.remove(combination.size() - 1);
+        }
+
+        /**
+         * <p>回溯: 第二种写法</p>
+         */
+        public static List<List<Integer>> combineInnerLoop(int number, int count) {
+            List<Integer> combination = new ArrayList<>();
+            List<List<Integer>> combinations = new ArrayList<>();
+            combineInnerLoop(number, count, combination, combinations);
+            return combinations;
+        }
+
+
+        public static void combineInnerLoop(int number, int count, List<Integer> combination, List<List<Integer>> combinations) {
+            if (count == 0) {
+                combinations.add(new ArrayList<>(combination));
+                return;
+            }
+            if (number == 0) {
+                return;
+            }
+            for (int value = number; value > 0; value--) {
+                combination.add(value);
+                combineInnerLoop(value - 1, count - 1, combination, combinations);
+                combination.remove(combination.size() - 1);
+            }
+        }
+
     }
 
 }
