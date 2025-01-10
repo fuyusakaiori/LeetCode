@@ -1,4 +1,4 @@
-package chapter09.array.dynamic.other;
+package chapter09.dynamic.other;
 
 import java.util.HashMap;
 import java.util.Map;
