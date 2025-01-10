@@ -6,12 +6,7 @@ import java.util.Arrays;
  * <h2>最大数</h2>
  * <p>核心: 贪心策略</p>
  */
-public class LargestNumber
-{
-    public static void main(String[] args)
-    {
-
-    }
+public class LargestNumber {
 
     /**
      * <p>贪心策略: </p>

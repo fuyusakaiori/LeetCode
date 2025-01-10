@@ -11,12 +11,8 @@ import java.util.Map;
  * <h3>2. 括号的生成</h3>
  * <h3>3. 最长有效括号</h3>
  */
-public class Brackets
-{
-    public static void main(String[] args)
-    {
+public class Brackets {
 
-    }
 
     /**
      * <h3>有效的括号</h3>

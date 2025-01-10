@@ -9,13 +9,7 @@ import java.util.Set;
  * <p>2. 要求这个子串中的字符不可以重复出现</p>
  * <p>3. 问这个子串的最长的长度是多少</p>
  */
-public class LengthOfLongestSubstring
-{
-
-    public static void main(String[] args)
-    {
-
-    }
+public class LengthOfLongestSubstring {
 
     /**
      * <p>字符串和数组经典技巧: 滑动窗口</p>
