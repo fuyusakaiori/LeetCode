@@ -1,4 +1,4 @@
-package chapter12;
+package other;
 
 import java.util.PriorityQueue;
 
@@ -8,8 +8,7 @@ import java.util.PriorityQueue;
  * <p>2. 比如要切分长度为 20 的金条, 无论切分成多大, 都需要花费 20 块</p>
  * <p>3. 问, 一群人如何切分金条, 花费最少</p>
  */
-public class CutGoldBar
-{
+public class CutGoldBar {
 
     /**
      * 贪心策略最常使用排序和堆结构完成

@@ -1,4 +1,4 @@
-package chapter09.string;
+package other;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,15 +7,7 @@ import java.util.List;
  * <h2>字符串的全部子序列</h2>
  * <p>问题描述: 找到字符串的全部子序列</p>
  */
-public class AllSubString
-{
-    /**
-     * 这道题的解法接近树的递归方式, 是双向的而不是单向的
-     */
-    public static void main(String[] args)
-    {
-        findAll("abc");
-    }
+public class AllSubString {
 
     /**
      * <p>核心思路</p>

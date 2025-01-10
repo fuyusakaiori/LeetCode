@@ -1,19 +1,11 @@
-package chapter09.string;
+package other;
 
 /**
- * <h2>打印字符串的全部排列组合</h2>
+ * <p>打印字符串的全部排列组合</p>
  * <p>问题描述: 就是说需要将字符串中的所有字符随机组合并打印</p>
  * <p>进阶问题: 不允许重复打印</p>
  */
-public class AllStringRange
-{
-    /**
-     * 分支限界, 提前结束递归, 也就是剪枝策略, 优化常数项
-     */
-    public static void main(String[] args)
-    {
-        findAll("abc");
-    }
+public class AllStringRange {
 
     /**
      * <p>核心思路</p>

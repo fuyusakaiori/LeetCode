@@ -1,4 +1,4 @@
-package chapter09.string;
+package other;
 
 /**
  * <h2>汉诺塔问题</h2>
@@ -8,15 +8,7 @@ package chapter09.string;
  * <p>问题描述: 这个问题的描述就不用再多介绍了, 相信上过大学的肯定听过这个问题</p>
  * <p>进阶问题: 采用时间复杂度为 O(N), 空间复杂度为 O(1) 的解法实现</p>
  */
-public class Hanoi
-{
-    /**
-     * <p>总结: 这应该是一种单调递归的方式, 持续向某一个方向递归</p>
-     */
-    public static void main(String[] args)
-    {
-        hanoi(3, "A", "B", "C");
-    }
+public class Hanoi {
 
     /**
      * <p>核心思路</p>

@@ -1,4 +1,4 @@
-package chapter12;
+package other;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,8 +12,8 @@ import java.util.Comparator;
  * <p>1. 暴力递归, 每个会议室都去尝试</p>
  * <p>2. 寻找贪心策略, 看有几个标准, 然后去尝试</p>
  */
-public class MeetingRooms
-{
+public class MeetingRooms {
+
     /**
      * 需要安排的项目类
      */
@@ -38,8 +38,7 @@ public class MeetingRooms
     }
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Program[] programs = {
                 new Program(6, 9), new Program(6, 8), new Program(7, 12),
                                      new Program(10, 13), new Program(11, 12), new Program(13, 16)

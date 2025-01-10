@@ -1,4 +1,4 @@
-package chapter09.string;
+package other;
 
 import java.util.LinkedList;
 
@@ -6,10 +6,9 @@ import java.util.LinkedList;
  * <h2>逆序栈</h2>
  * <p>不借助任何额外空间, 将栈逆序, 递归不算额外空间</p>
  */
-public class ReverseStack
-{
-    public static void main(String[] args)
-    {
+public class ReverseStack {
+
+    public static void main(String[] args) {
         LinkedList<Integer> stack = new LinkedList<>();
         for (int i = 1;i <= 10;i++){
             stack.push(i);

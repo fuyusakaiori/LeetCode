@@ -1,4 +1,4 @@
-package chapter09.string;
+package other;
 
 /**
  * <h2>N 皇后问题</h2>
@@ -7,18 +7,7 @@ package chapter09.string;
  * <p>2. 要求棋盘中所有皇后都是不可以放在同一行、同一列、同一斜线的</p>
  * <p>3. 问总共有多少种解法</p>
  */
-public class NQueen
-{
-
-    /**
-     * <p>仔细观察, 其实可以看出来</p>
-     * <p>递归实际上在对二维数组做行遍历</p>
-     * <p>循环实际上在对二维数组做列遍历</p>
-     */
-    public static void main(String[] args)
-    {
-        System.out.println(queen(4, ""));
-    }
+public class NQueen {
 
     /**
      * <p>暴力递归求解思路</p>

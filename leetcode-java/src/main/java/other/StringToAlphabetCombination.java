@@ -1,4 +1,4 @@
-package chapter09.string;
+package other;
 
 /**
  * <h2>数字字符串转换为字符组合的种数</h2>
@@ -8,8 +8,8 @@ package chapter09.string;
  * <p>3. 数字之间可以自由组合, 也就是说 1123, 可以将 1 认为是 A, 也可以将 11 认为是 K</p>
  * <p>4. 问有多少种组合方法</p>
  */
-public class StringToAlphabetCombination
-{
+public class StringToAlphabetCombination {
+
     public static void main(String[] args)
     {
         System.out.println(combination("01"));
