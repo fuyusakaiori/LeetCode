@@ -14,7 +14,7 @@ public class CombinationSum {
 
     /**
      * <p>组合总和: 无重复元素, 可以重复选择, 不允许组合重复</p>
-     * <p>如果没有重复元素, 那么只要不是全排列, 那么必然不可能存在重复的组合</p>
+     * <p>如果没有重复元素, 那么只要不回头选, 那么必然不可能存在重复的组合</p>
      */
     public static class CombinationSumI {
 
