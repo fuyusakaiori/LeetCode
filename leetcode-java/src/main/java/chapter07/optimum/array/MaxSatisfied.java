@@ -1,4 +1,4 @@
-package chapter07;
+package chapter07.optimum.array;
 
 /**
  * <h3>爱生气的书店老板</h3>

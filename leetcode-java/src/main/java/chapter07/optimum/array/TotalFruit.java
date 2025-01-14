@@ -1,4 +1,4 @@
-package chapter07;
+package chapter07.optimum.array;
 
 import java.util.HashMap;
 import java.util.Map;

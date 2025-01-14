@@ -1,14 +1,14 @@
-package chapter07;
+package chapter07.optimum.array;
 
 import java.util.*;
 
 /**
- * <h3>滑动窗口中位数</h3>
+ * <p>滑动窗口中位数</p>
  */
 public class MedianSlidingWindow {
 
     /**
-     * <h3>暴力解</h3>
+     * <p>暴力解</p>
      */
     private static double[] medianSlidingWindow1(int[] nums, int cnt){
         // 1. 中位数数组
@@ -44,7 +44,7 @@ public class MedianSlidingWindow {
     }
 
     /**
-     * <h3>双优先权队列 + 延迟删除</h3>
+     * <p>双优先权队列 + 延迟删除</p>
      */
     private static double[] medianSlidingWindow2(int[] nums, int cnt){
         // 1. 中位数数组
@@ -82,7 +82,7 @@ public class MedianSlidingWindow {
         }
 
         /**
-         * <h3>获取中位数: (较大的一半的最小值 + 较小的一半的最大值) / 2</h3>
+         * <p>获取中位数: (较大的一半的最小值 + 较小的一半的最大值) / 2</p>
          */
         public double getMedian(){
             return (windowSize & 1) == 1 ? small.peek() : ((double) small.peek() + large.peek()) / 2;
